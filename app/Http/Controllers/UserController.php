@@ -10,7 +10,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        $users = User::where('name', 'LIKE', "%{$search}%")-> latest()->paginate();
+        $users = User::where('name', 'LIKE', "%{$search}%") -> orWhere ('lastname', 'LIKE', "%{$search}%") -> latest()->paginate();
         return view('users.index',['users' => $users]);
     }
 
@@ -25,7 +25,7 @@ class UserController extends Controller
             'name'=> 'required',
             'lastname'=> 'required',
             'phone'=> 'required',
-            'email'=> 'required|unique:users,email' . $user->id,
+            'email'=> 'required',
             'password'=> 'required',
         ]);
 
