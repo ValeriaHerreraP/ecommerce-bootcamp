@@ -1,3 +1,4 @@
+<title>Edit users</title>
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -34,10 +35,6 @@
                     <label class="uppercase text-gray-700 text-xs">Password</label>
                     <span class="text-xs text-red-600"> @error('password') {{ $message }} @enderror</span>
                     <input type="text" name="password" class="rounded border-gray-200 w-full mb-4" value="{{ $user->password }}">
-
-                    <label class="uppercase text-gray-700 text-xs">Estado del Usuario</label>
-                    <span class="text-xs text-red-600"> @error('password') {{ $message }} @enderror</span>
-                    <input type="text" name="state" class="rounded border-gray-200 w-full mb-4" value="{{ $user->state }}">
 
                     <div class="flex justify-between items-center">
                         <a href="{{ route('users.index') }}" class="text-indigo-600">Volver</a>
