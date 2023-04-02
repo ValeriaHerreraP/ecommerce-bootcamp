@@ -28,6 +28,9 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
+    - name: Install npm
+      run: |
+        npm install
     - name: Vite Build
       run: |
         npm run dev
