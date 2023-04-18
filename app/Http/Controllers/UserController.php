@@ -11,6 +11,7 @@ class UserController extends Controller
     {
         $search = $request->search;
         $users = User::where('name', 'LIKE', "%{$search}%") -> orWhere ('lastname', 'LIKE', "%{$search}%") -> latest()->paginate();
+        
         return view('users.index',['users' => $users]);
     }
 
