@@ -16,7 +16,7 @@ class UserSedder extends Seeder
     {
        $users = User::factory(50)->create();
                 foreach($users as $user){
-                $user->assignRole('Customer');}
+                $user->assignRole('customer');}
 
         User::create([
             'name' => 'Valeria',
@@ -26,6 +26,6 @@ class UserSedder extends Seeder
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
             'state' => true,
             'is_admin' => true,
-         ])->assignRole('Admin');
+         ])->assignRole('admin');
     }
 }

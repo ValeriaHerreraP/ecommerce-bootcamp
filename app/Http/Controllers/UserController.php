@@ -27,7 +27,6 @@ class UserController extends Controller
             'lastname'=> 'required',
             'phone'=> 'required',
             'email'=> 'required',
-            'password'=> 'required',
         ]);
 
         $user->update([
@@ -35,7 +34,6 @@ class UserController extends Controller
             'lastname'=> $request->lastname,
             'phone'=> $request->phone,
             'email'=> $request->email,
-            'password'=> $request->password,
         ]);
 
         return redirect()->route('users.index', $user);
