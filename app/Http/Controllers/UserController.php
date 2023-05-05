@@ -32,7 +32,6 @@ class UserController extends Controller
             'lastname'=> $request->lastname,
             'phone'=> $request->phone,
             'email'=> $request->email,
-            'password'=> $request->password,
         ]);
 
         return redirect()->route('users.index', $user);
