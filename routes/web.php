@@ -37,8 +37,11 @@ Route::resource('users', UserController::class)->middleware('UserAdmin');
 
 Route::put('users/{user}/update-state', [UserController::class, 'updateState'])->name('users.updateState');
 
+
 Route::get('productos', [PageController::class, 'productos'])->name('productos');
 
 Route::resource('/products', ProductsController::class);
+
+Route::put('products/{product}/update-state', [ProductsController::class, 'updateState'])->name('products.updateState');
 
 require __DIR__.'/auth.php';

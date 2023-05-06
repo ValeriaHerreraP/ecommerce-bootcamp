@@ -19,6 +19,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 ">
                 @foreach ($products as $product)
+                @if ($product->state == 1)
                     <div class="w-full px-4 lg:px-0">
                         <div class="p-2 bg-white rounded shadow-md">
                             <div class="">
@@ -40,6 +41,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 @endforeach
 
                 {{$products->links()}}
