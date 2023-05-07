@@ -1,33 +1,30 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
 
+use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\RedirectResponse;
+use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $search = $request->search;
         $users = User::where('name', 'LIKE', "%{$search}%") -> orWhere ('lastname', 'LIKE', "%{$search}%") -> latest()->paginate();
         return view('users.index',['users' => $users]);
     }
 
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         return view('users.edit',['user' => $user]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-        $request->validate([
-            'name'=> 'required',
-            'lastname'=> 'required',
-            'phone'=> 'required',
-            'email'=> 'required',
-            'password'=> 'required',
-        ]);
+        $request->validate();
 
         $user->update([
             'name'=> $request->name,

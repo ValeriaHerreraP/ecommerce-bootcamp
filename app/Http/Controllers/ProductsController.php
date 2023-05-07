@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use App\Http\Requests\UpdateProductsRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
+
 
 class ProductsController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $search = $request->search;
         $product = products::where('product', 'LIKE', "%{$search}%")->paginate(5);
@@ -16,13 +20,13 @@ class ProductsController extends Controller
     }
 
     
-    public function create(products $product)
+    public function create(products $product): View
     {
         return view('products.create',['product' => $product]);
     }
 
     
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $product = $request -> all();
 
@@ -44,19 +48,15 @@ class ProductsController extends Controller
     }
 
    
-    public function edit(products $product)
+    public function edit(products $product): View
     {
         return view('products.edit',['product' => $product]);
     }
 
    
-    public function update(Request $request, products $product)
+    public function update(UpdateProductsRequest $request, products $product): RedirectResponse
     {
-        $request->validate([
-            'product'=>'required',
-            'price'=>'required',
-            'description'=>'required',
-        ]);
+        $request->validate();
 
         $prod = $request -> all();
 
