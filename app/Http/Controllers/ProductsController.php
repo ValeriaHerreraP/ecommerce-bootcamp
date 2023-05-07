@@ -56,7 +56,6 @@ class ProductsController extends Controller
    
     public function update(UpdateProductsRequest $request, products $product): RedirectResponse
     {
-        $request->validate();
 
         $prod = $request -> all();
 
