@@ -50,10 +50,13 @@ class ProductsController extends Controller
 
     public function update(UpdateProductsRequest $request, products $product): RedirectResponse
     {
+        $request->validated();
+        
         $prod = $request->all();
 
-        if ($image = $request->file('image')->store('public/image')) {
-            $url = Storage::url($image);
+        if ($image = $request->file('image')) {
+            $img = $image->store('public/image');
+            $url = Storage::url($img);
             $prod['image'] = $url;
         } else {
             unset($prod['image']);
