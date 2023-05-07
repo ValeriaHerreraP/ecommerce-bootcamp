@@ -18,9 +18,11 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @can('users.index')
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('dashboard')">
                         {{ __('Admin User') }}
                     </x-nav-link>
+                    @endcan
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

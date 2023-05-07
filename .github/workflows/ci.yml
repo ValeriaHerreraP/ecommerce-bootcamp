@@ -1,4 +1,4 @@
-name: Laravel
+name: CI Ecommerce
 
 on:
   push:
@@ -28,6 +28,12 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
+    - name: Install npm
+      run: |
+        npm install
+    - name: Vite Build
+      run: |
+        npm run build
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite

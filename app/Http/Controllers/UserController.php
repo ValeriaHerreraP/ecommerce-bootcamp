@@ -14,6 +14,7 @@ class UserController extends Controller
     {
         $search = $request->search;
         $users = User::where('name', 'LIKE', "%{$search}%") -> orWhere ('lastname', 'LIKE', "%{$search}%") -> latest()->paginate();
+        
         return view('users.index',['users' => $users]);
     }
 
@@ -31,7 +32,6 @@ class UserController extends Controller
             'lastname'=> $request->lastname,
             'phone'=> $request->phone,
             'email'=> $request->email,
-            'password'=> $request->password,
         ]);
 
         return redirect()->route('users.index', $user);

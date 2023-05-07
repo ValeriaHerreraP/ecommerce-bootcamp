@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/enabled', function () { return view('enabled'); })->name('enabled');
 
-Route::resource('users', UserController::class)->middleware('UserAdmin');
+Route::resource('users', UserController::class);
 
 Route::put('users/{user}/update-state', [UserController::class, 'updateState'])->name('users.updateState');
 
