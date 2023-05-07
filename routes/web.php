@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,5 +36,11 @@ Route::get('/enabled', function () { return view('enabled'); })->name('enabled')
 Route::resource('users', UserController::class);
 
 Route::put('users/{user}/update-state', [UserController::class, 'updateState'])->name('users.updateState');
+
+Route::get('productos', [PageController::class, 'productos'])->name('productos');
+
+Route::resource('/products', ProductsController::class);
+
+Route::put('products/{product}/update-state', [ProductsController::class, 'updateState'])->name('products.updateState');
 
 require __DIR__.'/auth.php';
