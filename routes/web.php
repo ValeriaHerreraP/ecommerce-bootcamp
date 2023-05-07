@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +23,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified','user.enabled'])->name('dashboard');
+})->middleware(['auth', 'verified', 'user.enabled'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,10 +31,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/enabled', function () { return view('enabled'); })->name('enabled');
+Route::get('/enabled', function () {
+    return view('enabled');
+})->name('enabled');
 
-Route::resource('users', UserController::class)->middleware('UserAdmin');
+Route::resource('users', UserController::class);
 
 Route::put('users/{user}/update-state', [UserController::class, 'updateState'])->name('users.updateState');
+
+Route::get('productos', [PageController::class, 'productos'])->name('productos');
+
+Route::resource('/products', ProductsController::class);
+
+Route::put('products/{product}/update-state', [ProductsController::class, 'updateState'])->name('products.updateState');
 
 require __DIR__.'/auth.php';

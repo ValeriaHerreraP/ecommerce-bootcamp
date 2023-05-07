@@ -19,8 +19,8 @@
                     <table class="mb-4">
                         @foreach ($users as $user)
                         <tr class = "border-b border-gray-200 text-sm">
-                            <td class="px-6 py-4">{{ $user['name'] }}</td>
-                            <td>{{ $user['lastname'] }}</td>
+                            <td class="px-6 py-4">{{ $user->name }}</td>
+                            <td>{{ $user->lastname }}</td>
                             <td class="px-6 py-4">
                                 <a href="{{ route('users.edit', $user) }}" class="text-indigo-600">Actualizar</a>
                             </td>
