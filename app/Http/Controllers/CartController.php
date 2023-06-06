@@ -26,7 +26,7 @@ class CartController extends Controller
     public function remove(Request $request){
         //Elimina el producto seleccionado
         \Cart::remove($request->id);
-        return redirect()->route('cart.index')->with('success_msg', 'Item removido del carrito!');
+        return redirect()->route('cart.index');
     }
 
     public function add(Request$request){
@@ -38,10 +38,9 @@ class CartController extends Controller
             'quantity' => $request->quantity,
             'attributes' => array(
                 'image' => $request->img,
-        
-            )
+         )
         ));
-        return redirect()->route('cart.index')->with('success_msg', 'Item Agregado a sú Carrito!');
+        return redirect()->route('cart.index');
     }
 
     public function update(Request $request){
@@ -53,7 +52,7 @@ class CartController extends Controller
                     'value' => $request->quantity
                 ),
         ));
-        return redirect()->route('cart.index')->with('success_msg', 'El carrito fue modificado');
+        return redirect()->route('cart.index');
     }
 
     public function clear(){
