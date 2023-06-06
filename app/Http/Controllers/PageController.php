@@ -13,6 +13,5 @@ class PageController extends Controller
         $product = products::where('product', 'LIKE', "%{$search}%")->orWhere('price', '<=', "{$search}")->paginate(6);
 
         return view('productos', ['products' => $product]);
-
     }
 }
