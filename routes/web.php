@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
@@ -44,5 +45,12 @@ Route::get('productos', [PageController::class, 'productos'])->name('productos')
 Route::resource('/products', ProductsController::class);
 
 Route::put('products/{product}/update-state', [ProductsController::class, 'updateState'])->name('products.updateState');
+
+Route::get('/carrito', [CartController::class, 'shop'])->name('cart.shop');
+Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
+Route::post('/add', [CartController::class, 'add'])->name('cart.store');
+Route::post('/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
 
 require __DIR__.'/auth.php';

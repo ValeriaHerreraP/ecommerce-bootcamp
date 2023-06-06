@@ -30,18 +30,21 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between">
             {{ __(' Products') }}  
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <form action="{{ route('productos') }}" method="GET">
+                    <input type="text" name="search" placeholder="Search products name" value="{{ request('search') }}"
+                    class="text-s" class="border border-gray-200 rounded py-2 px-4 w-1/2">
+                </form>
+        </div>
         </h2>
+
     </x-slot>
     
     <div class="py-1">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <form action="{{ route('productos') }}" method="GET">
-                    <input type="text" name="search" placeholder="Search products name" value="{{ request('search') }}"
-                    class="border border-gray-200 rounded py-2 px-4 w-1/2">
-                </form>
-        </div>
+         
     </div>
 
     <div class="principal">
@@ -65,7 +68,25 @@
                                 </div>
                                 <div class="mr-auto text-lg cursor-pointer hover:text-gray-900 ">{{ $product->price }}</div>
                                 <div class="mr-auto text-lg cursor-pointer hover:text-gray-900 ">{{ $product->description }}</div>
+                                
+                                <form action="{{ route('cart.store') }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" value="{{ $product->id }}" id="id" name="id">
+                                        <input type="hidden" value="{{ $product->product }}" id="name" name="name">
+                                        <input type="hidden" value="{{ $product->price }}" id="price" name="price">
+                                        <input type="hidden" value="{{ $product->image }}" id="img" name="img">
+                                        <input type="hidden" value="1" id="quantity" name="quantity">
+                                        <div class="card-footer" style="background-color: white;">
+
+                                
+                                <div class="row">
+                                    <button class="bg-gray-800 text-white rounded px-4 py-2" class="btn btn-secondary btn-sm" class="tooltip-test" title="add to cart">
+                                                     Agregar al carrito</button>
                                 </div>
+                                        </div>
+                                </form>
+
+                            </div>
 
                             </div>
                         </div>
