@@ -2,70 +2,79 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Products;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
     public function shop(Request $request)
     {
-        //muestra los productos 
+        //muestra los productos
         $search = $request->search;
         $product = products::where('product', 'LIKE', "%{$search}%")->orWhere('price', '<=', "{$search}")->paginate(6);
 
         return view('cart.shop', ['products' => $product]);
     }
 
-    public function cart()  {
+    public function cart()
+    {
         //Se muestran los productos añadidos
         $cartCollection = \Cart::getContent();
         //dd($cartCollection);
-        return view('cart.cart', ['cartCollection' => $cartCollection]);;
+        return view('cart.cart', ['cartCollection' => $cartCollection]);
     }
 
-    public function remove(Request $request){
+    public function remove(Request $request)
+    {
         //Elimina el producto seleccionado
         \Cart::remove($request->id);
+
         return redirect()->route('cart.index');
     }
 
-    public function add(Request$request){
+    public function add(Request $request)
+    {
         //añade el producto al carrito
-        \Cart::add(array(
+        \Cart::add([
             'id' => $request->id,
             'name' => $request->name,
             'price' => $request->price,
             'quantity' => $request->quantity,
-            'attributes' => array(
+            'attributes' => [
                 'image' => $request->img,
-         )
-        ));
+         ],
+        ]);
+
         return redirect()->route('cart.index');
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         //Modifica la cantidad
-        \Cart::update($request->id,
-            array(
-                'quantity' => array(
+        \Cart::update(
+            $request->id,
+            [
+                'quantity' => [
                     'relative' => false,
-                    'value' => $request->quantity
-                ),
-        ));
+                    'value' => $request->quantity,
+                ],
+        ]
+        );
+
         return redirect()->route('cart.index');
     }
 
-    public function clear(){
+    public function clear()
+    {
         //Elimina todos los elementos del carrito
         \Cart::clear();
+
         return redirect()->route('cart.index')->with('success_msg', 'Carrito sin productos.');
     }
 
-
-
   /*  public function uu (Request $request)
     {
-       
+
 
         \Cart::add(array(
             'id' => 456, // inique row ID
@@ -94,9 +103,8 @@ class CartController extends Controller
 
         $cartCollection = \Cart::getContent();
         dd($cartCollection);
-        
+
         return view('cart');
     }
     */
-
 }
