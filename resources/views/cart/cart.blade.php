@@ -81,7 +81,7 @@
                 <div class="font-semibold text-s text-gray-800 leading-tight flex justify-between" >
                   
                     <br><a href="/carrito"  class="text-s bg-gray-800 text-white rounded px-4 py-2"  class="btn btn-dark">Continue en la tienda</a><br>
-                   <br> <a href="/carrito" class="text-s bg-gray-800 text-white rounded px-4 py-2" class="btn btn-success">Proceder al Checkout</a><br>
+                   <br> <a href="/pago" class="text-s bg-gray-800 text-white rounded px-4 py-2" class="btn btn-success">Proceder al Checkout</a><br>
                 </div>
                 <br>
             @endif
