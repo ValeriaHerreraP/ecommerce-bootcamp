@@ -53,4 +53,6 @@ Route::post('/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
 
+Route::get('/pago', [CartController::class, 'pagos'])->name('cart.payments');
+
 require __DIR__.'/auth.php';
