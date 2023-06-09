@@ -25,4 +25,18 @@ class Payment extends Model
     {
         return $this->hasOne(User::class, 'id','user_id');
     }
+
+    public function canceled():void
+    {
+        $this->update([
+            'status' => 'CANCELED'
+        ]);
+    }
+
+    public function completed():void
+    {
+        $this->update([
+            'status' => 'COMPLETED'
+        ]);
+    }
 }
