@@ -24,6 +24,8 @@ class CartController extends Controller
         //Se muestran los productos añadidos
         $cartCollection = \Cart::getContent();
 
+       // dd($cartCollection);
+
         return view('cart.cart', ['cartCollection' => $cartCollection]);
     }
 
