@@ -57,5 +57,8 @@ Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
 Route::get('/pago', [PaymentController::class, 'pagos'])->name('cart.payments');
 Route::get('/resultpago', [PaymentController::class, 'processResponse'])->name('cart.resultPayments');
 Route::get('/paymentUser', [PaymentController::class, 'index'])->name('payments.index');
+Route::get('/orderDetails', [PaymentController::class, 'detailsCart'])->name('payments.detailsOrder');
+
+
 
 require __DIR__.'/auth.php';

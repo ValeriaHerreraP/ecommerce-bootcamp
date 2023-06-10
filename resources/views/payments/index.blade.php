@@ -30,12 +30,21 @@
                             <td class="px-6 py-4"> @if ($item->status == 'COMPLETED')
                                     {{('Finalizado')}}
                                     @else
-                                    <a href="/carrito"  class="text-indigo-600"  class="btn btn-dark">Retry</a>
+                                    <a href="/pago"  class="text-indigo-600"  class="btn btn-dark">Retry</a>
                                     @endif
                             </td>   
                             <td class="px-6 py-4">{{ $item->created_at }}</td> 
                             <td class="px-6 py-4">
-                                <a href="{{ route('payments.index') }}" class="text-s bg-gray-500 text-white rounded px-4 py-2">Details</a>
+                            <form action="{{ route('payments.detailsOrder', $item) }}" >
+                                    @csrf
+                                    <input 
+                                        type="submit"
+                                        name="state"
+                                        value="Details" 
+                                        class="bg-gray-500 text-white rounded px-4 py-2"
+                                    >
+                                    <input type="hidden" name="state" class="rounded border-gray-200 w-full mb-4" value="{{ $item->id }}">  
+                             </form>
                             </td> 
                         </tr>
                            @endforeach

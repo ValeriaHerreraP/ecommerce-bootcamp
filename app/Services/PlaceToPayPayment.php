@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\OrderDetails;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
@@ -52,7 +53,6 @@ class PlaceToPayPayment
          if($resultRequest->ok())
          {
             $status = $resultRequest->json()['status']['status'];
-            $msj = $resultRequest->json()['status']['message'];
 
             if($status == 'APPROVED'  || $status ==  'APPROVED_PARTIAL') {
                 $neworder->completed();
@@ -67,6 +67,24 @@ class PlaceToPayPayment
             }
 
             $cartCollection = \Cart::getContent();
+          
+
+            foreach($cartCollection as $items){
+
+                $subtotal = ($items->price * $items->quantity);
+
+                OrderDetails::create([
+                    'user_id' => auth()->id(),
+                    'order_id'=> $neworder->id,
+                    'name'=> $items->name,
+                    'price'=> $items->price,
+                    'quantity'=>$items->quantity,
+                    'subtotal' =>$subtotal,
+                    'total'=> \Cart::getTotal(),
+                    ]);
+            }
+              
+
             return view('cart.payments',['cartCollection' => $cartCollection, 'neworder' =>$neworder]);
 
          }
