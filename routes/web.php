@@ -59,6 +59,4 @@ Route::get('/resultpago', [PaymentController::class, 'processResponse'])->name('
 Route::get('/paymentUser', [PaymentController::class, 'index'])->name('payments.index');
 Route::get('/orderDetails', [PaymentController::class, 'detailsCart'])->name('payments.detailsOrder');
 
-
-
 require __DIR__.'/auth.php';

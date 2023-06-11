@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 return [
@@ -6,4 +7,3 @@ return [
     'tranKey'=> env('EVERTEC_TRANKEY'),
     'url'=> env('EVERTEC_URL'),
 ];
-

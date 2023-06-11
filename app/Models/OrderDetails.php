@@ -24,11 +24,11 @@ class OrderDetails extends Model
 
     public function userId(): HasOne
     {
-        return $this->hasOne(User::class, 'id','user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function orderId(): HasOne
     {
-        return $this->hasOne(Payment::class, 'id','order_id');
+        return $this->hasOne(Payment::class, 'id', 'order_id');
     }
 }
