@@ -3,21 +3,21 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between">
             {{ __('Manage products') }}  
-            <a href="{{ route('products.create') }}" class="text-xs bg-gray-800 text-white rounded px-4 py-2">Create product</a>
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <form action="{{ route('products.index') }}" method="GET" class="flex-grow">
                     <input type="text" name="search" placeholder="Search products name" value="{{ request('search') }}"
                     class="border border-gray-200 rounded py-2 px-4 w-1/2">
                 </form>
+            </div>
+            <a href="{{ route('products.create') }}" class="text-xs bg-gray-800 text-white rounded px-4 py-2">Create product</a>
+  
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">          
                 <div class="p-6 text-gray-900">
-               
-               
-
+            
                     <table class="table-fixed w-full">
                         <thead>
                             <tr class="bg-gray-800 text-white">

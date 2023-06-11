@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -52,5 +53,10 @@ Route::post('/add', [CartController::class, 'add'])->name('cart.store');
 Route::post('/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+Route::get('/pago', [PaymentController::class, 'pagos'])->name('cart.payments');
+Route::get('/resultpago', [PaymentController::class, 'processResponse'])->name('cart.resultPayments');
+Route::get('/paymentUser', [PaymentController::class, 'index'])->name('payments.index');
+Route::get('/orderDetails', [PaymentController::class, 'detailsCart'])->name('payments.detailsOrder');
 
 require __DIR__.'/auth.php';

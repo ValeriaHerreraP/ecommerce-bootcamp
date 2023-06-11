@@ -66,7 +66,7 @@ class ProductsController extends Controller
         return redirect()->route('products.index');
     }
 
-    public function updateState(Request $request, Products $product)
+    public function updateState(Request $request, Products $product): RedirectResponse
     {
         if ($request->state == 'Habilitar') {
             $state = 1;
@@ -81,7 +81,7 @@ class ProductsController extends Controller
         return back();
     }
 
-    public function destroy(products $product)
+    public function destroy(products $product): RedirectResponse
     {
         $product->delete();
 

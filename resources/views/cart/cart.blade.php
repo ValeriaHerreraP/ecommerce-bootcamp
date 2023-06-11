@@ -32,7 +32,7 @@
                                 <th class="border px-4 py-2">Product</th>
                                 <th class="border px-4 py-2">Price</th>
                                 <th class="border px-4 py-2">Subtotal</th>
-                                <th class="border px-4 py-2">Quantyty</th>
+                                <th class="border px-4 py-2">Quantity</th>
                                 <th class="border px-4 py-2">Delete</th>
                             </tr>
                         </thead>
@@ -81,7 +81,7 @@
                 <div class="font-semibold text-s text-gray-800 leading-tight flex justify-between" >
                   
                     <br><a href="/carrito"  class="text-s bg-gray-800 text-white rounded px-4 py-2"  class="btn btn-dark">Continue en la tienda</a><br>
-                   <br> <a href="/carrito" class="text-s bg-gray-800 text-white rounded px-4 py-2" class="btn btn-success">Proceder al Checkout</a><br>
+                   <br> <a href="/pago" class="text-s bg-gray-800 text-white rounded px-4 py-2" class="btn btn-success">Proceder al Checkout</a><br>
                 </div>
                 <br>
             @endif
@@ -89,16 +89,6 @@
             </div>
             <hr>
     </div>
-
-    <a id="navbarDropdown" class="nav-link dropdown-toggle"
-                       href="#" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false"
-                    >
-                        <span class="badge badge-pill badge-dark">
-                            <i class="fa fa-shopping-cart"></i> {{ \Cart::getTotalQuantity()}}
-                        </span>
-                    </a>
-
 </x-app-layout>
  
                 

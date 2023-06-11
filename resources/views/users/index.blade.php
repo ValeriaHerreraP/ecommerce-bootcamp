@@ -1,13 +1,14 @@
 <title>Users</title>
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between">
             {{ __('Usuarios registrados') }}
-                
+                <div>
             <form action="{{ route('users.index') }}" method="GET" class="flex-grow">
                     <input type="text" name="search" placeholder="Buscar" value="{{ request('search') }}"
                     class="border border-gray-200 rounded py-2 px-4 w-1/2">
             </form>
+                </div>
         </h2>
     </x-slot>
 

@@ -37,7 +37,7 @@ class UserController extends Controller
         return redirect()->route('users.index', $user);
     }
 
-    public function updateState(Request $request, User $user)
+    public function updateState(Request $request, User $user): RedirectResponse
     {
         if ($request->state == 'Habilitar') {
             $state = 1;
@@ -52,7 +52,7 @@ class UserController extends Controller
         return back();
     }
 
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         $user->delete();
 
