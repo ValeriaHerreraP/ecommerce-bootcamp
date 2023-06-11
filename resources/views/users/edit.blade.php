@@ -32,10 +32,6 @@
                     <span class="text-xs text-red-600"> @error('email') {{ $message }} @enderror</span>
                     <input type="text" name="email" class="rounded border-gray-200 w-full mb-4" value="{{ $user->email }}">
 
-                    <label class="uppercase text-gray-700 text-xs">Password</label>
-                    <span class="text-xs text-red-600"> @error('password') {{ $message }} @enderror</span>
-                    <input type="text" name="password" class="rounded border-gray-200 w-full mb-4" value="{{ $user->password }}">
-
                     <div class="flex justify-between items-center">
                         <a href="{{ route('users.index') }}" class="text-indigo-600">Volver</a>
 

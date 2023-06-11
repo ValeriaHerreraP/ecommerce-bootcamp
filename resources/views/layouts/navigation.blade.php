@@ -11,15 +11,36 @@
                 </div>
 
                 <!-- Navigation Links -->
+
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    @can('users.index')
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Admin User') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('dashboard')">
-                        {{ __('Admin User') }}
+                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Admin Products') }}
+                    </x-nav-link>
+                    @endcan
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('cart.shop')" :active="request()->routeIs('dashboard')">
+                        {{ __('Products') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('cart.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Cart') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('payments.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Shopping history') }}
                     </x-nav-link>
                 </div>
             </div>
