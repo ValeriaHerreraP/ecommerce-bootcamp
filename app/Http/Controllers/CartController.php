@@ -12,7 +12,6 @@ class CartController extends Controller
 {
     public function shop(Request $request): View
     {
-        //muestra los productos
         $search = $request->search;
         $product = products::where('product', 'LIKE', "%{$search}%")->orWhere('price', '<=', "{$search}")->paginate(6);
 
@@ -21,17 +20,13 @@ class CartController extends Controller
 
     public function cart(): View
     {
-        //Se muestran los productos añadidos
         $cartCollection = \Cart::getContent();
-
-       // dd($cartCollection);
 
         return view('cart.cart', ['cartCollection' => $cartCollection]);
     }
 
     public function remove(Request $request): RedirectResponse
     {
-        //Elimina el producto seleccionado
         \Cart::remove($request->id);
 
         return redirect()->route('cart.index');
@@ -39,8 +34,7 @@ class CartController extends Controller
 
     public function add(Request $request): RedirectResponse
     {
-        //añade el producto al carrito
-        \Cart::add([
+       \Cart::add([
             'id' => $request->id,
             'name' => $request->name,
             'price' => $request->price,
@@ -49,13 +43,13 @@ class CartController extends Controller
                 'image' => $request->img,
          ],
         ]);
+    
 
         return redirect()->route('cart.index');
     }
 
     public function update(Request $request): RedirectResponse
     {
-        //Modifica la cantidad
         \Cart::update(
             $request->id,
             [
@@ -71,7 +65,6 @@ class CartController extends Controller
 
     public function clear(): RedirectResponse
     {
-        //Elimina todos los elementos del carrito
         \Cart::clear();
 
         return redirect()->route('cart.index')->with('success_msg', 'Carrito sin productos.');
