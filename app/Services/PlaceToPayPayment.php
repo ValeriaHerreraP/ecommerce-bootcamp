@@ -7,17 +7,21 @@ use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use App\Actions\PaymentCreateAction;
+
 
 class PlaceToPayPayment
 {
     public function createSession(Request $request)
     {
-       $price = \Cart::getTotal();
+       //$price = \Cart::getTotal();
 
-        $neworden=  Payment::create([
-        'user_id' => auth()->id(),
-        'price_sum' => $price,
-        ]);
+        //$neworden=  Payment::create([
+        //'user_id' => auth()->id(),
+       // 'price_sum' => $price,
+        //]);
+
+        $neworden = PaymentCreateAction::execute($request->all());
 
         $result = Http::post(config('credentialesEvertec.url').'/api/session',
         $this->createRequest($neworden, $request->ip(), $request->userAgent()));
@@ -29,13 +33,13 @@ class PlaceToPayPayment
         $neworden->update();
 
         redirect()->to($neworden->url)->send();
-
-        
         }
 
         //redirigir al usuario a un lugar para indicarle porque no funciono
-
-         throw new \Exception($result->body());
+        else{
+            return view('product.index');
+        }
+         //throw new \Exception($result->body());
 
     }
 

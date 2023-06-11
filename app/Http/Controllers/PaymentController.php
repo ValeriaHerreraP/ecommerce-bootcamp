@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrderDetails;
 use Illuminate\Http\Request;
-use App\Models\Payment;
 use App\Services\PlaceToPayPayment;
 use Illuminate\Contracts\View\View;
+use App\Actions\NumOrderDetails;
+use App\Actions\UserOrderAction;
+
 
 class PaymentController extends Controller
 {
@@ -23,19 +24,17 @@ class PaymentController extends Controller
         return $placeToPayPayment->getRequestInformation();
     }
 
-    public function index()
+    public function index(): View
     {
-        $user = auth()->user()->id;
-        $userpayment = Payment::where('user_id', '=', "{$user}")->paginate(10);
+        $userpayment = UserOrderAction::execute();
 
         return view('payments.index', ['payment' => $userpayment]);
     }
 
-    public function detailsCart(Request $request)
+    public function detailsCart(Request $request): View
     {
-
         $numorder= $request->state;
-        $order = OrderDetails::where('order_id', 'LIKE', "$numorder")->latest()->paginate(10);
+        $order = NumOrderDetails::execute($numorder);
 
         return view('payments.detailsOrder', ['payment' => $order]);
     }
