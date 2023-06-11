@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
-
 
 class CartController extends Controller
 {
@@ -34,16 +33,15 @@ class CartController extends Controller
 
     public function add(Request $request): RedirectResponse
     {
-       \Cart::add([
-            'id' => $request->id,
-            'name' => $request->name,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'attributes' => [
-                'image' => $request->img,
-         ],
-        ]);
-    
+        \Cart::add([
+             'id' => $request->id,
+             'name' => $request->name,
+             'price' => $request->price,
+             'quantity' => $request->quantity,
+             'attributes' => [
+                 'image' => $request->img,
+          ],
+         ]);
 
         return redirect()->route('cart.index');
     }
@@ -69,6 +67,4 @@ class CartController extends Controller
 
         return redirect()->route('cart.index')->with('success_msg', 'Carrito sin productos.');
     }
-
 }
-    

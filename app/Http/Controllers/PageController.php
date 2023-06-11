@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\products;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class PageController extends Controller
 {

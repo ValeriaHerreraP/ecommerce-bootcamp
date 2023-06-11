@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Services\PlaceToPayPayment;
-use Illuminate\Contracts\View\View;
 use App\Actions\NumOrderDetails;
 use App\Actions\UserOrderAction;
-
+use App\Services\PlaceToPayPayment;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -18,7 +17,7 @@ class PaymentController extends Controller
 
         return $payments->getRequestInformation();
     }
-      
+
     public function processResponse(PlaceToPayPayment $placeToPayPayment)
     {
         return $placeToPayPayment->getRequestInformation();
@@ -33,10 +32,9 @@ class PaymentController extends Controller
 
     public function detailsCart(Request $request): View
     {
-        $numorder= $request->state;
+        $numorder = $request->state;
         $order = NumOrderDetails::execute($numorder);
 
         return view('payments.detailsOrder', ['payment' => $order]);
     }
-
 }

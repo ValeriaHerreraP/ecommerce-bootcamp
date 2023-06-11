@@ -17,26 +17,26 @@ class Payment extends Model
         'order_id',
         'url',
         'price_sum',
-        'currency', 
-        'status', 
+        'currency',
+        'status',
     ];
 
     public function user(): HasOne
     {
-        return $this->hasOne(User::class, 'id','user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function canceled():void
     {
         $this->update([
-            'status' => 'CANCELED'
+            'status' => 'CANCELED',
         ]);
     }
 
     public function completed():void
     {
         $this->update([
-            'status' => 'COMPLETED'
+            'status' => 'COMPLETED',
         ]);
     }
 }
