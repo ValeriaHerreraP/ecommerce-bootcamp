@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\NumOrderDetails;
-use App\Actions\UserOrderAction;
+use App\Actions\PaymentActions\NumOrderDetails;
+use App\Actions\PaymentActions\UserPaymentHistoryAction;
 use App\Services\PlaceToPayPayment;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function pagos(Request $request):View
+    public function pay(Request $request):View
     {
         $payments = new PlaceToPayPayment();
         $payments->createSession($request);
@@ -23,14 +23,14 @@ class PaymentController extends Controller
         return $placeToPayPayment->getRequestInformation();
     }
 
-    public function index(): View
+    public function userPaymentHistory(): View
     {
-        $userpayment = UserOrderAction::execute();
+        $userpayment = UserPaymentHistoryAction::execute();
 
         return view('payments.index', ['payment' => $userpayment]);
     }
 
-    public function detailsCart(Request $request): View
+    public function userOrderDetails(Request $request): View
     {
         $numorder = $request->state;
         $order = NumOrderDetails::execute($numorder);
