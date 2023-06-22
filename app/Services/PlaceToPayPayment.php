@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Actions\PaymentCreateAction;
-use App\Models\OrderDetails;
+use App\Actions\PaymentActions\PaymentCreateAction;
+use App\Models\OrderDetail;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,13 +13,6 @@ class PlaceToPayPayment
 {
     public function createSession(Request $request)
     {
-        //$price = \Cart::getTotal();
-
-        //$neworden=  Payment::create([
-        //'user_id' => auth()->id(),
-        // 'price_sum' => $price,
-        //]);
-
         $neworden = PaymentCreateAction::execute($request->all());
 
         $result = Http::post(
@@ -71,7 +64,7 @@ class PlaceToPayPayment
             foreach ($cartCollection as $items) {
                 $subtotal = ($items->price * $items->quantity);
 
-                OrderDetails::create([
+                OrderDetail::create([
                     'user_id' => auth()->id(),
                     'order_id'=> $neworder->id,
                     'name'=> $items->name,
