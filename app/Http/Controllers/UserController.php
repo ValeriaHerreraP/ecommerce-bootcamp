@@ -33,19 +33,21 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function updateState(Request $request, User $user): RedirectResponse
+    public function update_state_enable(User $user): RedirectResponse
     {
-        if ($request->state == 'Habilitar') {
-            $state = 1;
-        } else {
-            $state = 0;
-        }
-
         $user->update([
-            'state' => $state,
+            'state' => 0,
+        ]);
+        return redirect()->route('users.index');
+    }
+
+    public function update_state_disable(User $user): RedirectResponse
+    {
+        $user->update([
+            'state' => 1,
         ]);
 
-        return back();
+        return redirect()->route('users.index');
     }
 
     public function destroy(User $user): RedirectResponse

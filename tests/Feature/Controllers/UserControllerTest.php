@@ -85,6 +85,36 @@ class UserControllerTest extends TestCase
         $this->assertDatabaseHas('users', $data);
     }
 
+
+    public function test_update_state_enable()
+    {
+        $user = User::factory()->create();
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+
+        $data = [ 'state' => 0];
+
+        $response = $this->put(route('users.updateStateEnable', $user), $data);
+
+        $response
+            ->assertRedirectToRoute('users.index');
+            $this->assertDatabaseHas('users', $data);
+       
+    }
+
+    public function test_update_state_product_disable()
+    {
+        $user = User::factory()->create();
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+
+        $data = [ 'state' => 1];
+    
+        $response = $this->put(route('users.updateStateDisable', $user), $data);
+
+        $response
+            ->assertRedirectToRoute('users.index');
+            $this->assertDatabaseHas('users', $data);
+       
+    }
     public function test_delete_user()
     {
         $user = User::factory()->create();

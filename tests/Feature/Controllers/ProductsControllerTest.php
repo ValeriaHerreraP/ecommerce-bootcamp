@@ -99,8 +99,6 @@ class ProductsControllerTest extends TestCase
     {
         $product = Product::factory()->create();
         $this->actingAs(User::factory()->create(['is_admin' => true]));
-
-       
         
         $data = [
             'product' => fake()->name(),
@@ -117,6 +115,35 @@ class ProductsControllerTest extends TestCase
          //$this->assertDatabaseHas('products', $data);
     }
 
+    public function test_update_state_product_enable()
+    {
+        $product = Product::factory()->create();
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+
+        $data = [ 'state' => 0];
+
+        $response = $this->put(route('products.updateStateEnable', $product), $data);
+
+        $response
+            ->assertRedirectToRoute('products.index');
+            $this->assertDatabaseHas('products', $data);
+       
+    }
+
+    public function test_update_state_product_disable()
+    {
+        $product = Product::factory()->create();
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+
+        $data = [ 'state' => 1];
+
+        $response = $this->put(route('products.updateStateDisable', $product), $data);
+
+        $response
+            ->assertRedirectToRoute('products.index');
+            $this->assertDatabaseHas('products', $data);
+       
+    }
 
     public function test_delete_product()
     {
