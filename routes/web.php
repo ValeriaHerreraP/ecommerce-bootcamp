@@ -39,10 +39,12 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth', 'admin')->group(function () {
 
     Route::resource('users', UserController::class);
-    Route::put('users/{user}/update-state', [UserController::class, 'updateState'])->name('users.updateState');
+    Route::put('users/{user}/update-state', [UserController::class, 'update_state_enable'])->name('users.updateStateEnable');
+    Route::put('users/{user}/update-state0', [UserController::class, 'update_state_disable'])->name('users.updateStateDisable');
    
     Route::resource('/products', ProductsController::class);
-    Route::put('products/{product}/update-state', [ProductsController::class, 'updateState'])->name('products.updateState');
+    Route::put('products/{product}/show', [ProductsController::class, 'update_state_product_enable'])->name('products.updateStateEnable');
+    Route::put('products/{product}/disguise', [ProductsController::class, 'update_state_product_disable'])->name('products.updateStateDisable');
 });
 
 

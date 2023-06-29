@@ -14,7 +14,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-4">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">          
                 <div class="p-6 text-gray-900">
             
@@ -27,7 +27,8 @@
                                 <th class="border px-4 py-2">Description</th>
                                 <th class="border px-4 py-2">Image</th>
                                 <th class="border px-4 py-2">Edit</th>
-                                <th class="border px-4 py-2">State</th>
+                                <th class="border px-4 py-2">Enabled</th>
+                                <th class="border px-4 py-2">Disabled</th>
                                 <th class="border px-4 py-2">Delete</th>
                             </tr>
                         </thead>
@@ -44,26 +45,28 @@
                             <td class="px-6 py-4">
                                 <a href="{{ route('products.edit', $product) }}" class="text-indigo-600">Edit</a>
                             </td> 
+
                             <td class="px-6 py-4">
-                                <form action="{{ route('products.updateState', $product) }}" method="POST">
+                                <form action="{{ route('products.updateStateDisable', $product) }}" method="POST">
+                                @if ($product->state == 1)
+                                    {{('Show product')}}
+                                    @else
                                     @csrf
                                     @method('PUT')
-                                    @if ($product->state == 1)
-                                    <input 
-                                        type="submit"
-                                        name="state"
-                                        value="Deshabilitar" 
-                                        class="bg-gray-800 text-white rounded px-4 py-2"
-                                    >
-                                    @else
-                                    <input 
-                                        type="submit"
-                                        name="state"
-                                        value="Habilitar" 
-                                        class="bg-gray-800 text-white rounded px-4 py-2"
-                                    >
+                                    <input type="submit" value="Show product" class="bg-gray-800 text-white rounded px-4 py-2">
                                     @endif
                                 </form>
+                            </td> 
+                            <td class="px-6 py-4">
+                                <form action="{{ route('products.updateStateEnable', $product) }}" method="POST">
+                                @if ($product->state == 0)
+                                    {{('Disguise product')}}
+                                    @else
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="submit" value="Disguise product" class="bg-gray-800 text-white rounded px-4 py-2">
+                                </form>
+                                @endif
                             </td> 
                             <td class="px-6 py-4">
                                 <form action="{{ route('products.destroy', $product) }}" method="POST">
