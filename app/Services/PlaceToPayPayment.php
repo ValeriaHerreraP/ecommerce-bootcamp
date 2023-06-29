@@ -11,15 +11,17 @@ use Illuminate\Support\Facades\Http;
 
 class PlaceToPayPayment
 {
-    public function createSession(Request $request)
+    public function createSession(Request $request, $neworden)
     {
-        $neworden = PaymentCreateAction::execute($request->all());
 
+        if($neworden == ""){
+        $neworden = PaymentCreateAction::execute($request->all());}
+    
         $result = Http::post(
             config('credentialesEvertec.url').'/api/session',
             $this->createRequest($neworden, $request->ip(), $request->userAgent())
         );
-
+    
         if ($result->ok()) {
             $neworden->order_id = $result->json()['requestId'];
             $neworden->url = $result->json()['processUrl'];
@@ -28,11 +30,10 @@ class PlaceToPayPayment
 
             redirect()->to($neworden->url)->send();
         }
-
-        //redirigir al usuario a un lugar para indicarle porque no funciono
-        else {
-            return view('product.index');
-        }
+    
+       // redirect()->to($neworden->url)->send();
+        return view('product.index');
+        
         //throw new \Exception($result->body());
     }
 

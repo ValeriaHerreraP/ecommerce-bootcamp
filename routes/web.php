@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/result_payments', [PaymentController::class, 'processResponse'])->name('cart.resultPayments');
     Route::get('/payment_user', [PaymentController::class, 'userPaymentHistory'])->name('payments.index');
     Route::get('/order_details', [PaymentController::class, 'userOrderDetails'])->name('payments.detailsOrder');
+    Route::get('/order_retry', [PaymentController::class, 'retryPay'])->name('payments.retryOrder');
 
 });
 

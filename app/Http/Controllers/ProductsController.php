@@ -29,7 +29,7 @@ class ProductsController extends Controller
     }
 
 
-    public function store(Request $request): RedirectResponse
+    public function store(UpdateProductsRequest $request): RedirectResponse
     {
         ProductCreateAction::execute($request);
 
@@ -68,7 +68,7 @@ class ProductsController extends Controller
     public function destroy(Product $product): RedirectResponse
     {
         ProductDeleteAction::execute($product);
-        return back();
+        return redirect()->route('products.index');
     }
     
 }
