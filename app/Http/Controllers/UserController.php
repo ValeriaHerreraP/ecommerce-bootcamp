@@ -30,7 +30,7 @@ class UserController extends Controller
     {
         $user = UserUpdateAction::execute($request, $user);
 
-        return redirect()->route('users.index', $user);
+        return redirect()->route('users.index');
     }
 
     public function updateState(Request $request, User $user): RedirectResponse
@@ -52,6 +52,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return back();
+        return redirect()->route('users.index');
     }
 }
