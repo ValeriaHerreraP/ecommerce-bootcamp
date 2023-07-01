@@ -2,18 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\NumOrderDetails;
-use App\Actions\UserOrderAction;
+use App\Actions\PaymentActions\NumOrderDetails;
+use App\Actions\PaymentActions\UserPaymentHistoryAction;
+use App\Models\Payment;
 use App\Services\PlaceToPayPayment;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function pagos(Request $request):View
+    public function pay(Request $request):View
     {
+        $neworder = '';
         $payments = new PlaceToPayPayment();
-        $payments->createSession($request);
+        $payments->createSession($request, $neworder);
+
+        return $payments->getRequestInformation();
+    }
+
+    public function retryPay(Request $request):View
+    {
+        $orden_id = $request->order_id;
+
+        $ordenretry = Payment::where('order_id', '=', "$orden_id")->get();
+
+        $payments = new PlaceToPayPayment();
+
+        $payments->createSession($request, $ordenretry);
 
         return $payments->getRequestInformation();
     }
@@ -23,14 +38,14 @@ class PaymentController extends Controller
         return $placeToPayPayment->getRequestInformation();
     }
 
-    public function index(): View
+    public function userPaymentHistory(): View
     {
-        $userpayment = UserOrderAction::execute();
+        $userpayment = UserPaymentHistoryAction::execute();
 
         return view('payments.index', ['payment' => $userpayment]);
     }
 
-    public function detailsCart(Request $request): View
+    public function userOrderDetails(Request $request): View
     {
         $numorder = $request->state;
         $order = NumOrderDetails::execute($numorder);

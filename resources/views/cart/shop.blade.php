@@ -33,7 +33,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between">
             {{ __(' Products') }}  
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <form action="{{ route('productos') }}" method="GET">
+                <form action="{{ route('cart.shop') }}" method="GET">
                     <input type="text" name="search" placeholder="Search products name" value="{{ request('search') }}"
                     class="text-s" class="border border-gray-200 rounded py-2 px-4 w-1/2">
                 </form>

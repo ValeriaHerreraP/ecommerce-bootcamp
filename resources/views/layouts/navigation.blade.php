@@ -12,19 +12,21 @@
 
                 <!-- Navigation Links -->
 
+                @can('users.index')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    @can('users.index')
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('dashboard')">
                         {{ __('Admin User') }}
                     </x-nav-link>
                 </div>
+                @endcan
 
+                @can('products.index')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('products.index')" :active="request()->routeIs('dashboard')">
                         {{ __('Admin Products') }}
                     </x-nav-link>
-                    @endcan
                 </div>
+                @endcan
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('cart.shop')" :active="request()->routeIs('dashboard')">

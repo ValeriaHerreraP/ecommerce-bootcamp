@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Actions\PaymentCreateAction;
-use App\Models\OrderDetails;
+use App\Actions\PaymentActions\PaymentCreateAction;
+use App\Models\OrderDetail;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,16 +11,11 @@ use Illuminate\Support\Facades\Http;
 
 class PlaceToPayPayment
 {
-    public function createSession(Request $request)
+    public function createSession(Request $request, $neworden)
     {
-        //$price = \Cart::getTotal();
-
-        //$neworden=  Payment::create([
-        //'user_id' => auth()->id(),
-        // 'price_sum' => $price,
-        //]);
-
-        $neworden = PaymentCreateAction::execute($request->all());
+        if ($neworden == '') {
+            $neworden = PaymentCreateAction::execute($request->all());
+        }
 
         $result = Http::post(
             config('credentialesEvertec.url').'/api/session',
@@ -36,10 +31,9 @@ class PlaceToPayPayment
             redirect()->to($neworden->url)->send();
         }
 
-        //redirigir al usuario a un lugar para indicarle porque no funciono
-        else {
-            return view('product.index');
-        }
+        // redirect()->to($neworden->url)->send();
+        return view('product.index');
+
         //throw new \Exception($result->body());
     }
 
@@ -71,7 +65,7 @@ class PlaceToPayPayment
             foreach ($cartCollection as $items) {
                 $subtotal = ($items->price * $items->quantity);
 
-                OrderDetails::create([
+                OrderDetail::create([
                     'user_id' => auth()->id(),
                     'order_id'=> $neworder->id,
                     'name'=> $items->name,
