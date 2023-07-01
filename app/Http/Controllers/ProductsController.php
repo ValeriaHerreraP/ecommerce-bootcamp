@@ -22,12 +22,10 @@ class ProductsController extends Controller
         return view('products.index', ['products' => $product]);
     }
 
-
     public function create(Product $product): View
     {
         return view('products.create', ['product' => $product]);
     }
-
 
     public function store(UpdateProductsRequest $request): RedirectResponse
     {
@@ -36,12 +34,10 @@ class ProductsController extends Controller
         return redirect()->route('products.index');
     }
 
-
     public function edit(Product $product): View
     {
         return view('products.edit', ['product' => $product]);
     }
-
 
     public function update(UpdateProductsRequest $request, Product $product): RedirectResponse
     {
@@ -67,7 +63,7 @@ class ProductsController extends Controller
     public function destroy(Product $product): RedirectResponse
     {
         ProductDeleteAction::execute($product);
+
         return redirect()->route('products.index');
     }
-    
 }

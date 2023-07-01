@@ -32,6 +32,7 @@ class CartController extends Controller
     public function remove(Request $request): RedirectResponse
     {
         RemoveCartAction::execute($request);
+
         return redirect()->route('cart.index');
     }
 

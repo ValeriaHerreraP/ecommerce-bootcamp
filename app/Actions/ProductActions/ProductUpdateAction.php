@@ -19,7 +19,7 @@ class ProductUpdateAction
         } else {
             unset($data['image']);
         }
-        
+
         return $product->update($data);
     }
 }

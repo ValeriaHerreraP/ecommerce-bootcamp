@@ -10,7 +10,7 @@ class UserUpdateAction
     public static function execute(UpdateUserRequest $request, User $user)
     {
         $data = $request->all();
-       
+
         return $user->update($data);
     }
 }

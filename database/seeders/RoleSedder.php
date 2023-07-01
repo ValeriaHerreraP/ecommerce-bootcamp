@@ -29,5 +29,4 @@ class RoleSedder extends Seeder
         Permission::create(['name' => 'products.destroy'])->assignRole($roleAdmin);
         Permission::create(['name' => 'products.updateState'])->assignRole($roleAdmin);
     }
-
 }

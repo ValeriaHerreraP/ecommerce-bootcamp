@@ -18,11 +18,11 @@ class ProductFactory extends Factory
     {
         return [
                 'product' => fake()->name(),
-                'price' => "30000",
+                'price' => '30000',
                 'description' => fake()->sentence(),
                 'image' => 'images/logo.png',
                 'state' => true,
-                
+
             ];
     }
 }

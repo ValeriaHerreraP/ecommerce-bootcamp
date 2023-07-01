@@ -8,12 +8,17 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/', function () { return view('welcome'); });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::middleware('auth', 'verified', 'user.enabled')->group(function () {
-Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
-Route::get('/enabled', function () { return view('enabled'); })->name('enabled');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    Route::get('/enabled', function () {
+        return view('enabled');
+    })->name('enabled');
 });
 
 Route::middleware('auth')->group(function () {
@@ -33,26 +38,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment_user', [PaymentController::class, 'userPaymentHistory'])->name('payments.index');
     Route::get('/order_details', [PaymentController::class, 'userOrderDetails'])->name('payments.detailsOrder');
     Route::get('/order_retry', [PaymentController::class, 'retryPay'])->name('payments.retryOrder');
-
 });
 
 Route::middleware('auth', 'admin')->group(function () {
-
     Route::resource('users', UserController::class)->only(['index', 'edit', 'update', 'destroy']);
     Route::put('users/{user}/update-state', [UserController::class, 'update_state_enable'])->name('users.updateStateEnable');
     Route::put('users/{user}/update-state0', [UserController::class, 'update_state_disable'])->name('users.updateStateDisable');
-   
+
     Route::resource('/products', ProductsController::class)->except(['show']);
     Route::put('products/{product}/show', [ProductsController::class, 'update_state_product_enable'])->name('products.updateStateEnable');
     Route::put('products/{product}/disguise', [ProductsController::class, 'update_state_product_disable'])->name('products.updateStateDisable');
 });
-
-
-
-
-
-
-
-
 
 require __DIR__.'/auth.php';
