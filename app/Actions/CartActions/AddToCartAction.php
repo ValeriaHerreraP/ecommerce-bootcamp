@@ -2,12 +2,10 @@
 
 namespace App\Actions\CartActions;
 
-
 use Illuminate\Http\Request;
 
-
 class AddToCartAction
-{       
+{
     public static function execute(Request $request)
     {
         return \Cart::add([
@@ -21,6 +19,3 @@ class AddToCartAction
         ]);
     }
 }
-
-
-

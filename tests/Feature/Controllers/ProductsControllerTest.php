@@ -5,10 +5,10 @@ namespace Tests\Feature\Controllers;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Tests\TestCase;
 
 class ProductsControllerTest extends TestCase
 {
@@ -24,7 +24,7 @@ class ProductsControllerTest extends TestCase
     public function test_list_products()
     {
         $products = Product::factory(10)->create();
-      
+
         $this->actingAs(User::factory()->create(['is_admin' => true]));
 
         $response = $this->get(route('products.index'));
@@ -37,8 +37,7 @@ class ProductsControllerTest extends TestCase
             ->assertSeeText($products->price)
             ->assertSeeText($products->description)
             ->assertSeeText('Edit')
-            ->assertSeeText('Delete');  
-              
+            ->assertSeeText('Delete');
     }
 
     public function test_create_product()
@@ -46,15 +45,15 @@ class ProductsControllerTest extends TestCase
         $product = Product::factory()->create();
         $this->actingAs(User::factory()->create(['is_admin' => true]));
 
-        $response = $this->get(route('products.create',  $product));
+        $response = $this->get(route('products.create', $product));
 
         $response
             ->assertViewIs('products.create')
             ->assertOk()
             ->assertSeeText('Product')
             ->assertSeeText('Price')
-            ->assertSeeText('Description');     
-    }   
+            ->assertSeeText('Description');
+    }
 
     public function test_store_product()
     {
@@ -65,7 +64,7 @@ class ProductsControllerTest extends TestCase
 
         $data = [
             'product' => fake()->name(),
-            'price' => "30000",
+            'price' => '30000',
             'description' => fake()->sentence(),
             'image' => $file,
         ];
@@ -75,9 +74,8 @@ class ProductsControllerTest extends TestCase
         $response
             ->assertRedirectToRoute('products.index');
 
-         //$this->assertDatabaseHas('products', $data);
+        //$this->assertDatabaseHas('products', $data);
     }
-    
 
     public function test_edit_product()
     {
@@ -90,19 +88,18 @@ class ProductsControllerTest extends TestCase
             ->assertViewIs('products.edit')
             ->assertOk()
             ->assertSee($product->product)
-            ->assertSee($product->price,)
+            ->assertSee($product->price, )
             ->assertSee($product->description);
-           
     }
 
     public function test_update_product()
     {
         $product = Product::factory()->create();
         $this->actingAs(User::factory()->create(['is_admin' => true]));
-        
+
         $data = [
             'product' => fake()->name(),
-            'price' => "50000",
+            'price' => '50000',
             'description' => fake()->sentence(),
             'image' => 'image\logo.jpg',
         ];
@@ -112,7 +109,7 @@ class ProductsControllerTest extends TestCase
         $response
             ->assertRedirectToRoute('products.index');
 
-         //$this->assertDatabaseHas('products', $data);
+        //$this->assertDatabaseHas('products', $data);
     }
 
     public function test_update_state_product_enable()
@@ -120,14 +117,13 @@ class ProductsControllerTest extends TestCase
         $product = Product::factory()->create();
         $this->actingAs(User::factory()->create(['is_admin' => true]));
 
-        $data = [ 'state' => 0];
+        $data = ['state' => 0];
 
         $response = $this->put(route('products.updateStateEnable', $product), $data);
 
         $response
             ->assertRedirectToRoute('products.index');
-            $this->assertDatabaseHas('products', $data);
-       
+        $this->assertDatabaseHas('products', $data);
     }
 
     public function test_update_state_product_disable()
@@ -135,28 +131,23 @@ class ProductsControllerTest extends TestCase
         $product = Product::factory()->create();
         $this->actingAs(User::factory()->create(['is_admin' => true]));
 
-        $data = [ 'state' => 1];
+        $data = ['state' => 1];
 
         $response = $this->put(route('products.updateStateDisable', $product), $data);
 
         $response
             ->assertRedirectToRoute('products.index');
-            $this->assertDatabaseHas('products', $data);
-       
+        $this->assertDatabaseHas('products', $data);
     }
 
     public function test_delete_product()
     {
         $product = Product::factory()->create();
         $this->actingAs(User::factory()->create(['is_admin' => true]));
-    
 
         $response = $this->delete(route('products.destroy', $product));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('products.index'));
     }
-    
-
-
 }

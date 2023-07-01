@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
 
 class UserControllerTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function test_list_users_redirect_when_user_not_authenticated()
     {
         $response = $this->get(route('users.index'));
@@ -20,7 +20,7 @@ class UserControllerTest extends TestCase
     public function test_list_users()
     {
         $users = User::factory(10)->create();
-      
+
         $this->actingAs(User::factory()->create(['is_admin' => true]));
 
         $response = $this->get(route('users.index'));
@@ -31,9 +31,9 @@ class UserControllerTest extends TestCase
             ->assertOk()
             ->assertSeeText($user->name)
             ->assertSeeText($user->lastname)
-            ->assertSeeText('Actualizar');    
+            ->assertSeeText('Actualizar');
     }
-    
+
     public function test_list_users_with_search()
     {
         $user = User::factory()->create();
@@ -60,9 +60,9 @@ class UserControllerTest extends TestCase
             ->assertViewIs('users.edit')
             ->assertOk()
             ->assertSee($user->name)
-            ->assertSee($user->lastname,)
-            ->assertSee($user->phone,)
-            ->assertSee($user->email,);
+            ->assertSee($user->lastname, )
+            ->assertSee($user->phone, )
+            ->assertSee($user->email, );
     }
 
     public function test_update_user()
@@ -73,7 +73,7 @@ class UserControllerTest extends TestCase
         $data = [
             'name' => fake()->firstname(),
             'lastname' => fake()->lastname(),
-            'phone' => "4567822",
+            'phone' => '4567822',
             'email' => fake()->unique()->safeEmail(),
         ];
 
@@ -85,20 +85,18 @@ class UserControllerTest extends TestCase
         $this->assertDatabaseHas('users', $data);
     }
 
-
     public function test_update_state_enable()
     {
         $user = User::factory()->create();
         $this->actingAs(User::factory()->create(['is_admin' => true]));
 
-        $data = [ 'state' => 0];
+        $data = ['state' => 0];
 
         $response = $this->put(route('users.updateStateEnable', $user), $data);
 
         $response
             ->assertRedirectToRoute('users.index');
-            $this->assertDatabaseHas('users', $data);
-       
+        $this->assertDatabaseHas('users', $data);
     }
 
     public function test_update_state_product_disable()
@@ -106,27 +104,23 @@ class UserControllerTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs(User::factory()->create(['is_admin' => true]));
 
-        $data = [ 'state' => 1];
-    
+        $data = ['state' => 1];
+
         $response = $this->put(route('users.updateStateDisable', $user), $data);
 
         $response
             ->assertRedirectToRoute('users.index');
-            $this->assertDatabaseHas('users', $data);
-       
+        $this->assertDatabaseHas('users', $data);
     }
+
     public function test_delete_user()
     {
         $user = User::factory()->create();
         $this->actingAs(User::factory()->create(['is_admin' => true]));
-    
 
         $response = $this->delete(route('users.destroy', $user));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('users.index'));
     }
-    
-   
 }
-

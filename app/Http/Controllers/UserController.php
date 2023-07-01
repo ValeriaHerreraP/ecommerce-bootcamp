@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateUserRequest;
-
 use App\Actions\UserActions\UserListAction;
 use App\Actions\UserActions\UserUpdateAction;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,7 +25,7 @@ class UserController extends Controller
         return view('users.edit', ['user' => $user]);
     }
 
-    public function update( UpdateUserRequest $request, User $user): RedirectResponse
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $user = UserUpdateAction::execute($request, $user);
 
@@ -38,6 +37,7 @@ class UserController extends Controller
         $user->update([
             'state' => 0,
         ]);
+
         return redirect()->route('users.index');
     }
 

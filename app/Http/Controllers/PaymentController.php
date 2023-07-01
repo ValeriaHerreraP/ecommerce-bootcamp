@@ -13,7 +13,7 @@ class PaymentController extends Controller
 {
     public function pay(Request $request):View
     {
-        $neworder="";
+        $neworder = '';
         $payments = new PlaceToPayPayment();
         $payments->createSession($request, $neworder);
 
