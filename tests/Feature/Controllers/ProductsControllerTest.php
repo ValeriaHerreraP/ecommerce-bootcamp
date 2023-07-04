@@ -6,7 +6,6 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -73,6 +72,7 @@ class ProductsControllerTest extends TestCase
 
         $response
             ->assertRedirectToRoute('products.index');
+            
 
         //$this->assertDatabaseHas('products', $data);
     }
@@ -149,5 +149,12 @@ class ProductsControllerTest extends TestCase
 
         $response->assertStatus(302);
         $response->assertRedirect(route('products.index'));
+        $this->assertDatabaseMissing('products', [
+            'product' => $product->product,
+            'price' => $product->price,
+            'description' => $product->description,
+            'image'=> $product->image,
+            'state' => $product->state,
+        ]);
     }
 }
