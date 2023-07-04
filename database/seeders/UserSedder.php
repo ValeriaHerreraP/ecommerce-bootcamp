@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,6 +18,9 @@ class UserSedder extends Seeder
         foreach ($users as $user) {
             $user->assignRole('customer');
         }
+
+        Product::factory(50)->create();
+        
 
         User::create([
             'name' => 'Valeria',
