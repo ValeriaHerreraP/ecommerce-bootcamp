@@ -3,21 +3,19 @@
 namespace App\Services;
 
 use App\Actions\PaymentActions\PaymentCreateAction;
-use App\Models\OrderDetail;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Actions\PaymentActions\NumOrderDetails;
 use App\Logger\CustomLogger;
-use Illuminate\Validation\ValidationException;
 
 class PlaceToPayPayment
 {
     public function createSession(Request $request, string $order_id) : Payment
     {
         if ($order_id == '') {
-            $order = PaymentCreateAction::execute($request->all());
+            $order = PaymentCreateAction::execute();
             $orderExist = false;
         } else {
             $order = Payment::where('order_id', '=', "$order_id")->get()->first();
@@ -43,8 +41,8 @@ class PlaceToPayPayment
                 return $order;
             }
         }catch(\Exception $e){
-            throw $e;
             CustomLogger::logErrorPasarelaPago($e);
+            throw $e;
         }
    
         //throw new \Exception($result->body());
@@ -68,7 +66,6 @@ class PlaceToPayPayment
             } elseif ($status == 'REJECTED' || $status == 'PARTIAL_EXPIRED' || $status == 'FAILED') {
                 $order->canceled();
             } else {
-                dd($resultRequest);
                 throw new \Exception($resultRequest->body());
             }
 
@@ -131,8 +128,6 @@ class PlaceToPayPayment
         $info = '';
 
         foreach ($datos as $items) {
-            $items->name;
-            $items->quantity;
             $info = $info.' - '.$items->name.'. Cantidad:  '.$items->quantity.'.  ';
         }
 
