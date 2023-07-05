@@ -8,42 +8,53 @@ use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Actions\PaymentActions\NumOrderDetails;
+use App\Logger\CustomLogger;
+use Illuminate\Validation\ValidationException;
 
 class PlaceToPayPayment
 {
-    public function createSession(Request $request, $neworden)
+    public function createSession(Request $request, string $order_id) : Payment
     {
-        if ($neworden == '') {
-            $neworden = PaymentCreateAction::execute($request->all());
+        if ($order_id == '') {
+            $order = PaymentCreateAction::execute($request->all());
+            $orderExist = false;
+        } else {
+            $order = Payment::where('order_id', '=', "$order_id")->get()->first();
+            $orderExist = true;
         }
-
-        $result = Http::post(
-            config('credentialesEvertec.url').'/api/session',
-            $this->createRequest($neworden, $request->ip(), $request->userAgent())
-        );
-
-        if ($result->ok()) {
-            $neworden->order_id = $result->json()['requestId'];
-            $neworden->url = $result->json()['processUrl'];
-
-            $neworden->update();
-
-            redirect()->to($neworden->url)->send();
+        
+        try{
+           // throw ValidationException::withMessages(['your error message']);
+            $result = Http::post(
+                config('credentialesEvertec.url').'/api/session',
+                $this->createRequest($order, $request->ip(), $request->userAgent())
+            );
+    
+            if ($result->ok()) {
+                if($orderExist == false){
+                    $order->order_id = $result->json()['requestId'];
+                }
+                
+                $order->url = $result->json()['processUrl'];
+    
+                $order->update();
+    
+                return $order;
+            }
+        }catch(\Exception $e){
+            throw $e;
+            CustomLogger::logErrorPasarelaPago($e);
         }
-
-        // redirect()->to($neworden->url)->send();
-        return view('product.index');
-
+   
         //throw new \Exception($result->body());
     }
 
-    public function getRequestInformation()
+    public function getRequestInformation(Payment $order)
     {
-        $neworder = Payment::query()->where('user_id', '=', auth()->id())
-        ->where('status', '=', 'PENDING')->latest()->first();
-
+        $placetopay_id = explode('/', $order->url)[5];
         $resultRequest = Http::post(
-            config('credentialesEvertec.url')."/api/session/$neworder->order_id",
+            config('credentialesEvertec.url')."/api/session/$placetopay_id",
             [
                'auth' => $this->getAuth(),
             ]
@@ -53,30 +64,16 @@ class PlaceToPayPayment
             $status = $resultRequest->json()['status']['status'];
 
             if ($status == 'APPROVED' || $status == 'APPROVED_PARTIAL') {
-                $neworder->completed();
+                $order->completed();
             } elseif ($status == 'REJECTED' || $status == 'PARTIAL_EXPIRED' || $status == 'FAILED') {
-                $neworder->canceled();
+                $order->canceled();
             } else {
+                dd($resultRequest);
                 throw new \Exception($resultRequest->body());
             }
 
-            $cartCollection = \Cart::getContent();
-
-            foreach ($cartCollection as $items) {
-                $subtotal = ($items->price * $items->quantity);
-
-                OrderDetail::create([
-                    'user_id' => auth()->id(),
-                    'order_id'=> $neworder->id,
-                    'name'=> $items->name,
-                    'price'=> $items->price,
-                    'quantity'=>$items->quantity,
-                    'subtotal' =>$subtotal,
-                    'total'=> \Cart::getTotal(),
-                    ]);
-            }
-
-            return view('cart.payments', ['cartCollection' => $cartCollection, 'neworder' =>$neworder]);
+            $order_details = NumOrderDetails::execute($order->id);
+            return view('payments.detailsOrder', ['payment' => $order_details, 'payment_status' => $order->status]);
         }
     }
 
@@ -115,12 +112,12 @@ class PlaceToPayPayment
                 'description' => $this->recorrer(),
                 'amount' => [
                     'currency' => 'COP',
-                    'total' => \Cart::getTotal(),
+                    'total' =>  $neworden->price_sum,
                 ],
                 ],
 
             'expiration' => Carbon::now()->addHour(),
-            'returnUrl' => route('cart.resultPayments'),
+            'returnUrl' => route('cart.resultPayments', ['id' => $neworden->id]),
             'ipAddress' => $ipAdress,
             'userAgent' => $userAgent,
 

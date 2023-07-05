@@ -39,9 +39,8 @@
                                         value="Reversar pago" 
                                         class="bg-gray-500 text-white rounded px-4 py-2"
                                     >
-                                    <input type="hidden" name="order_id" class="rounded border-gray-200 w-full mb-4" value="{{ $item->url }}">  
+                                    <input type="hidden" name="order_id" class="rounded border-gray-200 w-full mb-4" value="{{ $item->order_id }}">  
                              </form>
-                                    <a href="/pay"  class="text-indigo-600"  class="btn btn-dark">Retry</a>
                                     @endif
                             </td>   
                             <td class="px-6 py-4">{{ $item->created_at }}</td> 
