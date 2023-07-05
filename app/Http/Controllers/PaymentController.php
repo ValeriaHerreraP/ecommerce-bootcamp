@@ -9,22 +9,22 @@ use App\Models\OrderDetail;
 use App\Services\PlaceToPayPayment;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Actions\CartActions\ClearCartAction;
 
 class PaymentController extends Controller
 {
-    public function pay(Request $request):View
+    public function pay(Request $request): RedirectResponse
     {
         $payments = new PlaceToPayPayment();
 
         try {
             $order = $payments->createSession($request, "");
         }catch(\Exception $e){
-            return view('dashboard');
+            return redirect()->route('dashboard');
             //CAMBIAR
         }
 
-        if ($order != null) {
             $cartCollection = \Cart::getContent();
 
             foreach ($cartCollection as $items) {
@@ -44,21 +44,16 @@ class PaymentController extends Controller
 
             \Cart::clear();
 
-            redirect()->to($order->url)->send();
-        } 
+            return redirect()->to($order->url)->send();
     }
 
-    public function retryPay(Request $request):View
+    public function retryPay(Request $request):RedirectResponse
     {
         $orden_id = $request->order_id;
         $payments = new PlaceToPayPayment();
 
         $order = $payments->createSession($request, $orden_id);
-        if ($order != null) {
-            redirect()->to($order->url)->send();
-        } else {
-            return view('product.index');
-        }
+        return redirect()->to($order->url)->send();
     }
 
     public function processResponse(Request $request)
