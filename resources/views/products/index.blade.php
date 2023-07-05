@@ -60,11 +60,11 @@
                             <td class="px-6 py-4">
                                 <form action="{{ route('products.updateStateEnable', $product) }}" method="POST">
                                 @if ($product->state == 0)
-                                    {{('Disguise product')}}
+                                    {{('Hide product')}}
                                     @else
                                     @csrf
                                     @method('PUT')
-                                    <input type="submit" value="Disguise product" class="bg-gray-800 text-white rounded px-4 py-2">
+                                    <input type="submit" value="Hide Product" class="bg-gray-800 text-white rounded px-4 py-2">
                                 </form>
                                 @endif
                             </td> 

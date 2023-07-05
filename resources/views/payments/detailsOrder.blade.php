@@ -3,7 +3,14 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between">
      
-        {{ __(' Detalle de tu compra:') }}          
+        @if ($payment_status != '')
+            {{ __(' Estado del pago:' ) }}
+            {{$payment_status}}
+        @endif
+        <br>
+        <br>
+
+        {{ __(' Detalle de tu compra:') }}  
                                  
         <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
