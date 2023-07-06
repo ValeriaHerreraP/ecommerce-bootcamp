@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductCreateAction
 {
-    public static function execute(Request $request)
+    public static function execute(Request $request): Product
     {
         $product = $request->all();
 

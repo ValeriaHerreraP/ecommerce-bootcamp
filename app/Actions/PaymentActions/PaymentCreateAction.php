@@ -6,7 +6,7 @@ use App\Models\Payment;
 
 class PaymentCreateAction
 {
-    public static function execute()
+    public static function execute(): Payment
     {
         $price = \Cart::getTotal();
 

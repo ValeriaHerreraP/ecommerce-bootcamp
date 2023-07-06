@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Actions\CartActions\ClearCartAction;
+use App\Actions\PaymentActions\OrderDetailsAction;
 
 class PaymentController extends Controller
 {
@@ -24,25 +25,6 @@ class PaymentController extends Controller
             return redirect()->route('dashboard');
             //CAMBIAR
         }
-
-            $cartCollection = \Cart::getContent();
-
-            foreach ($cartCollection as $items) {
-                $subtotal = ($items->price * $items->quantity);
-
-                //ACTION 
-                OrderDetail::create([
-                    'user_id' => auth()->id(),
-                    'order_id'=> $order->id,
-                    'name'=> $items->name,
-                    'price'=> $items->price,
-                    'quantity'=>$items->quantity,
-                    'subtotal' =>$subtotal,
-                    'total'=> \Cart::getTotal(),
-                    ]);
-            }
-
-            \Cart::clear();
 
             return redirect()->to($order->url)->send();
     }
