@@ -8,7 +8,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Actions\PaymentActions\NumOrderDetails;
-use App\Logger\CustomLogger;
+use App\Loggers\Logger;
+use App\Actions\PaymentActions\OrderDetailsAction;
+use Illuminate\Contracts\View\View;
 
 class PlaceToPayPayment
 {
@@ -21,9 +23,10 @@ class PlaceToPayPayment
             $order = Payment::where('order_id', '=', "$order_id")->get()->first();
             $orderExist = true;
         }
+
+        OrderDetailsAction::execute($order);
         
         try{
-           // throw ValidationException::withMessages(['your error message']);
             $result = Http::post(
                 config('credentialesEvertec.url').'/api/session',
                 $this->createRequest($order, $request->ip(), $request->userAgent())
@@ -37,18 +40,18 @@ class PlaceToPayPayment
                 $order->url = $result->json()['processUrl'];
     
                 $order->update();
+
+                Logger::payment_session_created_successfully();
     
                 return $order;
             }
-        }catch(\Exception $e){
-            CustomLogger::logErrorPasarelaPago($e);
-            throw $e;
+        }catch(\Exception $error){
+            Logger::payment_gateway_error($error);
+            throw $error;
         }
-   
-        //throw new \Exception($result->body());
     }
 
-    public function getRequestInformation(Payment $order)
+    public function getRequestInformation(Payment $order): View
     {
         $placetopay_id = explode('/', $order->url)[5];
         $resultRequest = Http::post(
@@ -69,7 +72,11 @@ class PlaceToPayPayment
                 throw new \Exception($resultRequest->body());
             }
 
+            Logger::order_payment_status($status, $order->id);
+
             $order_details = NumOrderDetails::execute($order->id);
+
+
             return view('payments.detailsOrder', ['payment' => $order_details, 'payment_status' => $order->status]);
         }
     }
@@ -106,7 +113,7 @@ class PlaceToPayPayment
             ],
             'payment' => [
                 'reference' => $neworden->id,
-                'description' => $this->recorrer(),
+                'description' => $this->order_details_in_the_payment_gateway($neworden),
                 'amount' => [
                     'currency' => 'COP',
                     'total' =>  $neworden->price_sum,
@@ -121,9 +128,9 @@ class PlaceToPayPayment
             ];
     }
 
-    public function recorrer():string
+    public function order_details_in_the_payment_gateway($order):string
     {
-        $datos = \Cart::getContent();
+        $datos = NumOrderDetails::execute($order->id);
 
         $info = '';
 
