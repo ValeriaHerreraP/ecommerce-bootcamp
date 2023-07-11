@@ -26,7 +26,7 @@ class ApiProductsControllerTest extends TestCase
          /** @var Product $product */
          $product = Product::factory()->make();
 
-         Storage::fake('public');
+        Storage::fake('public');
         $file = UploadedFile::fake()->image('images/logo.png');
 
         $this->postJson(route('api.products.store'), [

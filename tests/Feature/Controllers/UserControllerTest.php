@@ -5,6 +5,8 @@ namespace Tests\Feature\Controllers;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserControllerTest extends TestCase
 {
@@ -17,11 +19,29 @@ class UserControllerTest extends TestCase
         $response->assertRedirectToRoute('login');
     }
 
+    public function test_list_users_rol_not_authorize()
+    {
+        $customer= User::factory()->create();
+        $role = Role::findOrCreate('customer');
+        $customer->assignRole($role);
+        $this->actingAs($customer);
+
+        $response = $this->get(route('users.index'));
+
+        $response
+        ->assertForbidden();
+    }
+
     public function test_list_users()
     {
         $users = User::factory(10)->create();
 
-        $this->actingAs(User::factory()->create(['is_admin' => true]));
+        $super_admin = User::factory()->create();
+        $permission = Permission::findOrCreate('users.index');
+        $role = Role::findOrCreate('super_admin')->givePermissionTo($permission);
+        $super_admin->assignRole($role);
+
+        $this->actingAs($super_admin);
 
         $response = $this->get(route('users.index'));
 
@@ -36,8 +56,14 @@ class UserControllerTest extends TestCase
 
     public function test_list_users_with_search()
     {
+        $super_admin = User::factory()->create();
+        $permission = Permission::findOrCreate('users.index');
+        $role = Role::findOrCreate('super_admin')->givePermissionTo($permission);
+        $super_admin->assignRole($role);
+
+        $this->actingAs($super_admin);
+
         $user = User::factory()->create();
-        $this->actingAs(User::factory()->create(['is_admin' => true]));
 
         $response = $this->get(route('users.index').'?search='.$user->name);
 
@@ -51,8 +77,14 @@ class UserControllerTest extends TestCase
 
     public function test_edit_user()
     {
+        $super_admin = User::factory()->create();
+        $permission = Permission::findOrCreate('users.edit');
+        $role = Role::findOrCreate('super_admin')->givePermissionTo($permission);
+        $super_admin->assignRole($role);
+
+        $this->actingAs($super_admin);
+
         $user = User::factory()->create();
-        $this->actingAs(User::factory()->create(['is_admin' => true]));
 
         $response = $this->get(route('users.edit', $user));
 
@@ -67,8 +99,14 @@ class UserControllerTest extends TestCase
 
     public function test_update_user()
     {
+        $super_admin = User::factory()->create();
+        $permission = Permission::findOrCreate('users.edit');
+        $role = Role::findOrCreate('super_admin')->givePermissionTo($permission);
+        $super_admin->assignRole($role);
+
+        $this->actingAs($super_admin);
+
         $user = User::factory()->create();
-        $this->actingAs(User::factory()->create(['is_admin' => true]));
 
         $data = [
             'name' => fake()->firstname(),
@@ -87,8 +125,14 @@ class UserControllerTest extends TestCase
 
     public function test_update_state_enable()
     {
+        $super_admin = User::factory()->create();
+        $permission = Permission::findOrCreate('users.updateStateEnable');
+        $role = Role::findOrCreate('super_admin')->givePermissionTo($permission);
+        $super_admin->assignRole($role);
+
+        $this->actingAs($super_admin);
+
         $user = User::factory()->create();
-        $this->actingAs(User::factory()->create(['is_admin' => true]));
 
         $data = ['state' => 0];
 
@@ -99,10 +143,16 @@ class UserControllerTest extends TestCase
         $this->assertDatabaseHas('users', $data);
     }
 
-    public function test_update_state_product_disable()
+    public function test_update_state_user_disable()
     {
+        $super_admin = User::factory()->create();
+        $permission = Permission::findOrCreate('users.updateStateDisable');
+        $role = Role::findOrCreate('super_admin')->givePermissionTo($permission);
+        $super_admin->assignRole($role);
+
+        $this->actingAs($super_admin);
+        
         $user = User::factory()->create();
-        $this->actingAs(User::factory()->create(['is_admin' => true]));
 
         $data = ['state' => 1];
 
@@ -115,8 +165,14 @@ class UserControllerTest extends TestCase
 
     public function test_delete_user()
     {
+        $super_admin = User::factory()->create();
+        $permission = Permission::findOrCreate('users.destroy');
+        $role = Role::findOrCreate('super_admin')->givePermissionTo($permission);
+        $super_admin->assignRole($role);
+
+        $this->actingAs($super_admin);
+
         $user = User::factory()->create();
-        $this->actingAs(User::factory()->create(['is_admin' => true]));
 
         $response = $this->delete(route('users.destroy', $user));
 

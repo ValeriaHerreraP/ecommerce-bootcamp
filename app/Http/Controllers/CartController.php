@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:cart.shop')->only('shop');
+        $this->middleware('can:cart.index')->only('cart');
+        $this->middleware('can:cart.store')->only('add_products_cart');
+        $this->middleware('can:cart.update')->only('update');
+        $this->middleware('can:cart.remove')->only('remove_item_cart');
+        $this->middleware('can:cart.clear')->only('clear_cart');
+    }
+
     public function shop(Request $request): View
     {
         $search = $request->search;
@@ -30,14 +40,14 @@ class CartController extends Controller
         return view('cart.cart', ['cartCollection' => $cartCollection]);
     }
 
-    public function remove(Request $request): RedirectResponse
+    public function remove_item_cart(Request $request): RedirectResponse
     {
         RemoveCartAction::execute($request);
 
         return redirect()->route('cart.index');
     }
 
-    public function add(Request $request): RedirectResponse
+    public function add_products_cart(Request $request): RedirectResponse
     {
         AddToCartAction::execute($request);
 
@@ -51,7 +61,7 @@ class CartController extends Controller
         return redirect()->route('cart.index');
     }
 
-    public function clear(): RedirectResponse
+    public function clear_cart(): RedirectResponse
     {
         ClearCartAction::execute();
 

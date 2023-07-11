@@ -8,6 +8,6 @@ class ProductListAction
 {
     public static function execute($search)
     {
-        return Product::where('product', 'LIKE', "%{$search}%")->paginate(5);
+        return Product::where('product', 'LIKE', "%{$search}%")->paginate(10);
     }
 }
