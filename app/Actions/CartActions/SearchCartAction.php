@@ -8,6 +8,6 @@ class SearchCartAction
 {
     public static function execute($search)
     {
-        return Product::where('product', 'LIKE', "%{$search}%")->orWhere('price', '<=', "{$search}")->paginate(6);
+        return Product::where('product', 'LIKE', "%{$search}%")->orWhere('price', '<=', "{$search}")->paginate(15);
     }
 }

@@ -10,14 +10,40 @@
                 </form>
             </div>
             <a href="{{ route('products.create') }}" class="text-xs bg-gray-800 text-white rounded px-4 py-2">Create product</a>
-  
+            <br>
         </h2>
     </x-slot>
 
     <div class="py-4">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">          
-                <div class="p-6 text-gray-900">
-            
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">      
+                    
+            @can('products.export')
+            <div class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <a href="{{ route('products.export') }}" class="text-xs bg-gray-800 text-white rounded px-4 py-2">Export Products</a>
+            @if(session()->has('messag'))
+    <div class="alert alert-success">
+        {{ session()->get('messag') }}
+    </div>
+@endif
+
+@endcan
+@can('products.import')
+            <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data">
+                       @csrf
+                       <input type="file" name="doc" class="rounded px-4 py-2 text-xs "/>
+                       <button type="submit" class="text-xs bg-gray-800 text-white rounded px-4 py-2">Import Products
+                       </button>
+  
+
+                       @if(session()->has('message'))
+    <div >
+        {{ session()->get('message') }}
+    </div>
+@endif
+            </form>   
+            </div>
+            @endcan
+                <div class="p-6 text-gray-900 max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <table class="table-fixed w-full">
                         <thead>
                             <tr class="bg-gray-800 text-white">
@@ -45,7 +71,6 @@
                             <td class="px-6 py-4">
                                 <a href="{{ route('products.edit', $product) }}" class="text-indigo-600">Edit</a>
                             </td> 
-
                             <td class="px-6 py-4">
                                 <form action="{{ route('products.updateStateDisable', $product) }}" method="POST">
                                 @if ($product->state == 1)

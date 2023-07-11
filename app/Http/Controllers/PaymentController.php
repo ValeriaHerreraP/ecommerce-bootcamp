@@ -15,6 +15,15 @@ use App\Actions\PaymentActions\OrderDetailsAction;
 
 class PaymentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:payments.detailsPayments')->only('pay');
+        $this->middleware('can:cart.resultPayments')->only('processResponse');
+        $this->middleware('can:payments.index')->only('userPaymentHistory');
+        $this->middleware('can:payments.detailsOrder')->only('userOrderDetails');
+        $this->middleware('can:payments.retryOrder')->only('retryPay');
+    }
+
     public function pay(Request $request): RedirectResponse
     {
         $payments = new PlaceToPayPayment();
