@@ -10,8 +10,7 @@ use App\Http\Resources\V1\ProductResourse;
 use App\Actions\ProductActions\ProductCreateAction;
 use App\Actions\ProductActions\ProductUpdateAction;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use App\Contracts\ApiExportController;
-use App\Contracts\BaseApiContoller;
+
 
 class ProductsController extends Controller
 {
@@ -37,6 +36,13 @@ class ProductsController extends Controller
         return new ProductResourse($product);
 
     }
+
+    /*public function get_product_by_name(Product $product): ProductResourse
+    {
+        return new ProductResourse($product->name);
+
+    }
+    */
 
     public function update(Request $request, Product $product): JsonResponse
     {

@@ -12,6 +12,8 @@ use App\Loggers\Logger;
 use App\Actions\PaymentActions\OrderDetailsAction;
 use Illuminate\Contracts\View\View;
 
+use function PHPUnit\Framework\throwException;
+
 class PlaceToPayPayment
 {
     public function createSession(Request $request, string $order_id) : Payment
@@ -20,7 +22,7 @@ class PlaceToPayPayment
             $order = PaymentCreateAction::execute();
             $orderExist = false;
         } else {
-            $order = Payment::where('order_id', '=', "$order_id")->get()->first();
+            $order = Payment::query()->where('order_id', '=', "$order_id")->first();
             $orderExist = true;
         }
 
@@ -45,6 +47,9 @@ class PlaceToPayPayment
     
                 return $order;
             }
+
+             throw new \Exception($result->body());
+
         }catch(\Exception $error){
             Logger::payment_gateway_error($error);
             throw $error;
@@ -76,9 +81,9 @@ class PlaceToPayPayment
 
             $order_details = NumOrderDetails::execute($order->id);
 
-
             return view('payments.detailsOrder', ['payment' => $order_details, 'payment_status' => $order->status]);
         }
+        return view('cart.index');
     }
 
     private function getAuth(): array
@@ -95,7 +100,7 @@ class PlaceToPayPayment
                     true,
                 )
             ),
-            'nonce'=> base64_encode($nonce),
+            'nonce'=> base64_encode(strval($nonce)),
             'seed' => $seed,
         ];
     }

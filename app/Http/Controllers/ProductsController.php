@@ -88,6 +88,7 @@ class ProductsController extends Controller
         //(new ProductsExport)->queue('products'. date('Y-m-d-His'). '.xlsx', 'disk_reports');
         (new ProductsExport)->queue('products.xlsx', 'disk_reports');
         Logger::export_products_admin();
+        
         return redirect()->route('products.index')->with('messag', 'The export was successfully');
        // return Excel::download(new ProductsExport(), 'products.xlsx');
     }
