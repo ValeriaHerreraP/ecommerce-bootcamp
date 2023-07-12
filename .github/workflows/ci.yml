@@ -2,9 +2,9 @@ name: CI Ecommerce
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "feature/stage-four" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "feature/stage-four" ]
 
 jobs:
   laravel-tests:
@@ -39,3 +39,9 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+    - name: Phpstan
+      run: |
+        vendor/bin/phpstan analyse --memory-limit=2G
+
+
+      

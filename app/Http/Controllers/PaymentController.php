@@ -47,7 +47,7 @@ class PaymentController extends Controller
         return redirect()->to($order->url)->send();
     }
 
-    public function processResponse(Request $request)
+    public function processResponse(Request $request): View
     {
         $id = $request->query('id');
         $order = Payment::query()->where('user_id', '=', auth()->id())
