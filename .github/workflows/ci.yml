@@ -2,9 +2,9 @@ name: CI Ecommerce
 
 on:
   push:
-    branches: [ "feature/stage-four" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "feature/stage-four" ]
+    branches: [ "main" ]
 
 jobs:
   laravel-tests:

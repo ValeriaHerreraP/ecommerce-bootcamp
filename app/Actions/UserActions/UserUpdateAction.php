@@ -7,7 +7,7 @@ use App\Models\User;
 
 class UserUpdateAction
 {
-    public static function execute(UpdateUserRequest $request, User $user)
+    public static function execute(UpdateUserRequest $request, User $user): Bool
     {
         $data = $request->all();
 

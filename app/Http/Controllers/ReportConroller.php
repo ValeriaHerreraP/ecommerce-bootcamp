@@ -2,81 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Actions\ReportActions\OrderCreatedByMonth;
+use App\Actions\ReportActions\ProductsCreateByMonth;
+use App\Actions\ReportActions\ProductsSoldByMonth;
+use App\Actions\ReportActions\SalesByMonth;
+use App\Actions\ReportActions\StateOrderCurrentMonth;
+use App\Actions\ReportActions\Top3UserCurrentMonth;
+use App\Actions\ReportActions\TopProductsCurrentMonth;
+use App\Actions\ReportActions\UserForMonth;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
+use Illuminate\Contracts\View\View;
+
 
 class ReportConroller extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        $chart_options = [
-            'chart_title' => 'Users by months',
-            'report_type' => 'group_by_date',
-            'model' => 'App\Models\User',
-            'group_by_field' => 'created_at',
-            'group_by_period' => 'month',
-            'chart_type' => 'bar',
-            'filter_field' => 'created_at',
-            'filter_days' => 60, 
-            'chart_color' => '255,0,0'// show only last 30 days
-        ];
-    
-        $chart1 = new LaravelChart($chart_options);
-    
-    
-        $chart_options = [
-            'chart_title' => 'Users by names',
-            'report_type' => 'group_by_string',
-            'model' => 'App\Models\User',
-            'group_by_field' => 'name',
-            'chart_type' => 'pie',
-            'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
-        ];
-    
-        $chart2 = new LaravelChart($chart_options);
-    
+        $user_for_month =  UserForMonth::execute();
+        $chart1 = new LaravelChart($user_for_month);
 
-        $chart_options = [
-            'chart_title' => 'Top 3 productos mas vendido',
-            'chart_type' => 'bar',
-            'report_type' => 'group_by_string',
-            'model' => 'App\Models\OrderDetail',
-            //'conditions'            => [
-                //['name' => 'Food', 'condition' => 'category_id = 1', 'color' => 'black', 'fill' => true],
-                //['name' => 'Transport', 'condition' => 'category_id = 2', 'color' => 'blue', 'fill' => true],
-           // ],
-           'top_results' => 3,
-            'group_by_field' => 'name',
-            'group_by_period' => 'day',
-        
-            'aggregate_function' => 'sum',
-            'aggregate_field' => 'quantity',
-            
-            //'filter_field' => 'transaction_date',
-           // 'filter_days' => 30, // show only transactions for last 30 days
-            'filter_period' => 'week', // show only transactions for this week
-            //'continuous_time' => true, // show continuous timeline including dates without data
-        ];
-
-        $chart3 = new LaravelChart($chart_options);
+        $products_sold_by_month =  ProductsSoldByMonth::execute();
+        $chart3 = new LaravelChart($products_sold_by_month);
+    
+        $report_sales_by_month = SalesByMonth::execute();
+        $chart2 = new LaravelChart($report_sales_by_month);
+    
         /*
         $chart_options = [
-            'chart_title' => 'Users by name products',
-            'report_type' => 'group_by_string',
-            'model' => 'App\Models\Product',
-            'group_by_field' => 'product',
-            'chart_type' => 'pie',
-            'filter_field' => 'created_at',
-            'filter_period' => 'month',
-        ];
-    
-        $chart3 = new LaravelChart($chart_options);
-    
+                'chart_title' => 'Users by name products',
+                'report_type' => 'group_by_string',
+                'model' => 'App\Models\Product',
+                'group_by_field' => 'product',
+                'chart_type' => 'pie',
+                'filter_field' => 'created_at',
+                'filter_period' => 'month',
+                'chart_color' => '106, 90, 205'
         
-        */
-        return view('graficos', compact('chart1', 'chart2', 'chart3'));
+        ];
+
+        $chart4 = new LaravelChart($chart_options);*/
+
+        $products_create_by_month = ProductsCreateByMonth::execute();
+        $chart5 = new LaravelChart($products_create_by_month );
+
+        $order_create_by_month = OrderCreatedByMonth::execute();
+        $chart6 = new LaravelChart($order_create_by_month);
+
+        return view('reports.general', compact('chart1', 'chart2','chart3', 'chart5', 'chart6'));
     }
+    
+    public function detailed_report_for_the_current_month(): View
+    {
+        $top_prodruct_current_month = TopProductsCurrentMonth::execute();
+        $chart3 = new LaravelChart($top_prodruct_current_month);
+
+     
+        $top3_user = Top3UserCurrentMonth::execute();
+        $chart5 = new LaravelChart($top3_user);
+
+
+        $state_order = StateOrderCurrentMonth::execute();
+        $chart6 = new LaravelChart($state_order);
+
+        return view('reports.DetailMonth', compact('chart3', 'chart5', 'chart6'));
+
+    }
+
     
 }

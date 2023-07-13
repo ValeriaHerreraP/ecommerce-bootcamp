@@ -2,13 +2,14 @@
 
 namespace App\Actions\PaymentActions;
 use App\Models\OrderDetail;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 
 class OrderDetailsAction
 {
-    public static function execute($order)
+    public static function execute($order): Bool
     {
-        $cartCollection = \Cart::getContent();
+        $cartCollection = Cart::getContent();
 
         foreach ($cartCollection as $items) {
             $subtotal = ($items->price * $items->quantity);
@@ -21,11 +22,11 @@ class OrderDetailsAction
                 'price'=> $items->price,
                 'quantity'=>$items->quantity,
                 'subtotal' =>$subtotal,
-                'total'=> \Cart::getTotal(),
+                'total'=> Cart::getTotal(),
                 ]);
         }
 
-        return  \Cart::clear();
+        return Cart::clear();
         
     }
 }

@@ -47,6 +47,9 @@ class RoleSedder extends Seeder
         Permission::create(['name' => 'payments.index'])->syncRoles([$roleAdmin, $roleUser]);
         Permission::create(['name' => 'payments.detailsOrder'])->syncRoles([$roleAdmin, $roleUser]);
         Permission::create(['name' => 'payments.retryOrder'])->syncRoles([$roleAdmin, $roleUser]);
+
+        Permission::create(['name' => 'reports.general'])->assignRole([$roleSuperAdmin]);
+        Permission::create(['name' => 'reports.DetailMonth'])->assignRole([$roleSuperAdmin]);
        
     }
 }

@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use App\Actions\PaymentActions\NumOrderDetails;
 use App\Actions\PaymentActions\UserPaymentHistoryAction;
 use App\Models\Payment;
-use App\Models\OrderDetail;
 use App\Services\PlaceToPayPayment;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use App\Actions\CartActions\ClearCartAction;
-use App\Actions\PaymentActions\OrderDetailsAction;
+
 
 class PaymentController extends Controller
 {

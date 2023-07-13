@@ -8,7 +8,7 @@ use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class UpdateCartAction
 {
-    public static function execute(Request $request)
+    public static function execute(Request $request): Bool
     {
         return Cart::update(
             $request->id,
