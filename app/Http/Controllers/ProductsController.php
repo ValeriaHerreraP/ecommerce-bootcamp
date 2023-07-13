@@ -85,8 +85,8 @@ class ProductsController extends Controller
 
     public function export_products(): RedirectResponse
     {
-        //(new ProductsExport)->queue('products'. date('Y-m-d-His'). '.xlsx', 'disk_reports');
-        (new ProductsExport)->queue('products.xlsx', 'disk_reports');
+        (new ProductsExport)->queue('products'. date('Y-m-d-His'). '.xlsx', 'disk_reports');
+        //(new ProductsExport)->queue('products.xlsx', 'disk_reports');
         Logger::export_products_admin();
         
         return redirect()->route('products.index')->with('messag', 'The export was successfully');

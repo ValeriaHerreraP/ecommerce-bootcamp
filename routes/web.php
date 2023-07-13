@@ -12,7 +12,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/graficos', [ReportConroller::class, 'index'])->name('graficos');
+Route::get('/report_general', [ReportConroller::class, 'index'])->name('reports.general');
+Route::get('/report_current_month', [ReportConroller::class, 'detailed_report_for_the_current_month'])->name('reports.DetailMonth');
 
 Route::middleware('auth', 'verified', 'user.enabled')->group(function () {
     Route::get('/dashboard', function () {

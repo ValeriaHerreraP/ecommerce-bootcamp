@@ -51,6 +51,24 @@
                     </x-nav-link>
                 </div>
                 @endcan
+
+                @can('reports.general')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('reports.general')" :active="request()->routeIs('dashboard')">
+                        {{ __('Report General') }}
+                    </x-nav-link>
+                </div>
+                @endcan
+
+                @can('reports.DetailMonth')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('reports.DetailMonth')" :active="request()->routeIs('dashboard')">
+                        {{ __('Report Month') }}
+                    </x-nav-link>
+                </div>
+                @endcan
+
+
             </div>
 
             <!-- Settings Dropdown -->

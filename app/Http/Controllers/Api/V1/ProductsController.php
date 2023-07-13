@@ -37,13 +37,6 @@ class ProductsController extends Controller
 
     }
 
-    /*public function get_product_by_name(Product $product): ProductResourse
-    {
-        return new ProductResourse($product->name);
-
-    }
-    */
-
     public function update(Request $request, Product $product): JsonResponse
     {
         ProductUpdateAction::execute($request, $product);

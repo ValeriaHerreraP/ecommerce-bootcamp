@@ -3,10 +3,11 @@
 namespace App\Actions\CartActions;
 
 use App\Models\Product;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchCartAction
 {
-    public static function execute($search)
+    public static function execute($search): LengthAwarePaginator
     {
         return Product::where('product', 'LIKE', "%{$search}%")->orWhere('price', '<=', "{$search}")->paginate(15);
     }

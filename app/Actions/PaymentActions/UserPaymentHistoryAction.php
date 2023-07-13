@@ -3,10 +3,11 @@
 namespace App\Actions\PaymentActions;
 
 use App\Models\Payment;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserPaymentHistoryAction
 {
-    public static function execute()
+    public static function execute(): LengthAwarePaginator
     {
         $user = auth()->user()->id;
 

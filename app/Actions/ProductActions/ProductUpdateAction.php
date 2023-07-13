@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductUpdateAction
 {
-    public static function execute(Request $request, Product $product)
+    public static function execute(Request $request, Product $product): Bool
     {
         $data = $request->all();
 
