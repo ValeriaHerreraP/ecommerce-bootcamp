@@ -11,7 +11,7 @@ class UserForMonth
     public static function execute(): array
     {
         $chart_options = [
-            'chart_title' => 'USUARIOS REGISTRADOS POR MES',
+            'chart_title' => 'USERS CREATED PER MONTH',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\User',
             'group_by_field' => 'created_at',
@@ -19,8 +19,8 @@ class UserForMonth
             'chart_type' => 'bar',
             'filter_field' => 'created_at',
             'filter_period' => 'year',
-            'date_format_filter_days',
             'chart_color' => '106, 90, 205'
+        
         ];
     
         

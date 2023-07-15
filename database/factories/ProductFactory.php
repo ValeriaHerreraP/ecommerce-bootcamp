@@ -18,7 +18,7 @@ class ProductFactory extends Factory
     {
         return [
                 'product' => fake()->name(),
-                'price' => '30000',
+                'price' => mt_rand(25000,300000),
                 'description' => fake()->sentence(),
                 'image' => 'images/logo.png',
                 'state' => true,

@@ -8,7 +8,7 @@ class Top3UserCurrentMonth
     public static function execute(): array
     {
         $chart_options = [
-            'chart_title' => 'Usuarios con mas compras',
+            'chart_title' => 'USERS WITH THE MOST PURCHASES',
             'chart_type' => 'bar',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\Payment',

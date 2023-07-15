@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ProductsExport;
+
 
 class ProductsControllerTest extends TestCase
 {
@@ -192,7 +191,6 @@ class ProductsControllerTest extends TestCase
         $this->actingAs($super_admin);
 
         $product = Product::factory()->create();
-      //  $this->actingAs(User::factory()->create(['is_admin' => true]));
 
         $data = ['state' => 1];
 
