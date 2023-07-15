@@ -21,7 +21,7 @@ class Logger {
     public static function order_payment_status($status, $order):void
     {
         $user_id = auth()->user()->id;
-        Log::info( "The payment status of user with Id" . $user_id . " and order " . $order . " is:  " . $status);
+        Log::info( "The payment status of user with Id " . $user_id . " and order " . $order . " is:  " . $status);
     }
 
     public static function update_users_admin($user):void
@@ -33,13 +33,13 @@ class Logger {
     public static function update_users_state($user):void
     {
         $user_name = auth()->user()->name;
-        Log::info( "The user administrator" . $user_name . "successfully update the state User with ID: ". $user->id);
+        Log::info( "The user administrator " . $user_name . "successfully update the state User with ID: ". $user->id);
     }
 
     public static function delete_users($user):void
     {
         $user_name = auth()->user()->name;
-        Log::info( "The user administrator" . $user_name . "successfully update the state User with ID: ". $user->id);
+        Log::info( "The user administrator " . $user_name . "successfully update the state User with ID: ". $user->id);
     }
 
     public static function create_product():void
@@ -50,25 +50,31 @@ class Logger {
     public static function update_products_admin($product):void
     {
         $user_name = auth()->user()->name;
-        Log::info( "The user administrator" . $user_name . "successfully update the product with ID: ". $product->id);
+        Log::info( "The user administrator " . $user_name . "successfully update the product with ID: ". $product->id);
     }
 
     public static function delete_products($product):void
     {
         $user_name = auth()->user()->name;
-        Log::info( "The user administrator" . $user_name . "successfully delete the product with ID: ". $product->id);
+        Log::info( "The user administrator " . $user_name . "successfully delete the product with ID: ". $product->id);
     }
 
     public static function export_products_admin():void
     {
         $user_name = auth()->user()->name;
-        Log::info( "The user administrator" . $user_name . "successfully exported the products");
+        Log::info( "The user administrator " . $user_name . "successfully exported the products");
     }
 
     public static function import_products_admin():void
     {
         $user_name = auth()->user()->name;
-        Log::info( "The user administrator" . $user_name . "successfully imported the products");
+        Log::info( "The user administrator " . $user_name . "successfully imported the products");
+    }
+
+    public static function delete_and_import_products_admin():void
+    {
+        $user_name = auth()->user()->name;
+        Log::info( "The user administrator " . $user_name . "successfully deleted and imported the products");
     }
 
 

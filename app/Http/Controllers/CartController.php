@@ -37,7 +37,7 @@ class CartController extends Controller
     {
         $cartCollection = ListCartAction::execute();
 
-        return view('cart.cart', ['cartCollection' => $cartCollection]);
+        return view('cart.index', ['cartCollection' => $cartCollection]);
     }
 
     public function remove_item_cart(Request $request): RedirectResponse

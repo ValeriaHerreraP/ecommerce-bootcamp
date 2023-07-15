@@ -9,7 +9,7 @@ class TopProductsCurrentMonth
     public static function execute(): array
     {
         $chart_options = [
-            'chart_title' => 'Top 3 productos mas vendidos',
+            'chart_title' => 'TOP 3 BEST SELLING PRODUCTS',
             'chart_type' => 'bar',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\OrderDetail',

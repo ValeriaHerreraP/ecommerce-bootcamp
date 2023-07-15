@@ -10,7 +10,7 @@ class ProductsSoldByMonth
     public static function execute(): array
     {
         $chart_options = [
-            'chart_title' => 'CANTIDAD DE PRODUCTOS VENDIDOS POR MES',
+            'chart_title' => 'NUMBER OF PRODUCTS SOLD PER MONTH',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\OrderDetail',
             'group_by_field' => 'created_at',

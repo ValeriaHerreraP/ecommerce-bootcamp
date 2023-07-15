@@ -21,28 +21,47 @@
             <div class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between max-w-7xl mx-auto sm:px-6 lg:px-8">
             <a href="{{ route('products.export') }}" class="text-xs bg-gray-800 text-white rounded px-4 py-2">Export Products</a>
             @if(session()->has('messag'))
-    <div class="alert alert-success">
-        {{ session()->get('messag') }}
+           <div class="alert alert-success text-xs">
+            {{ session()->get('messag') }}
     </div>
-@endif
+             @endif
+
+        <a href="{{ route('products.exportdw') }}" class="text-xs bg-gray-800 text-white rounded px-4 py-2">Export Products DW</a>
 
 @endcan
-@can('products.import')
+
+            <div>
+            @can('products.import')
             <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data">
                        @csrf
                        <input type="file" name="doc" class="rounded px-4 py-2 text-xs "/>
                        <button type="submit" class="text-xs bg-gray-800 text-white rounded px-4 py-2">Import Products
                        </button>
-  
-
                        @if(session()->has('message'))
-    <div >
-        {{ session()->get('message') }}
-    </div>
-@endif
-            </form>   
-            </div>
+                      <div class = "text-xs" >
+                      {{ session()->get('message') }}
+                      </div>
+                      @endif
+            </form>  
+            
+            @can('products.import')
+            <form action="{{ route('products.delete_import') }}" method="POST" enctype="multipart/form-data">
+                       @csrf
+                       <input type="file" name="import" class="rounded px-4 py-2 text-xs" />
+                       <button type="submit" class="text-xs bg-gray-800 text-white rounded px-4 py-2 ">Delete Products and Import</button>
             @endcan
+
+            @if(session()->has('mess'))
+            <div class = "text-xs" >
+            {{ session()->get('mess') }}
+            </div>
+            @endif
+            @endcan
+            </form> 
+            </div>
+
+            </div>
+           
                 <div class="p-6 text-gray-900 max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <table class="table-fixed w-full">
                         <thead>

@@ -7,7 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchCartAction
 {
-    public static function execute($search): LengthAwarePaginator
+    public static function execute(string $search): LengthAwarePaginator
     {
         return Product::where('product', 'LIKE', "%{$search}%")->orWhere('price', '<=', "{$search}")->paginate(15);
     }

@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Exports\ProductsExport;
+use App\Exports\ProductsDownloadExport;
 use App\Imports\ProductsImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Loggers\Logger;
@@ -82,27 +83,6 @@ class ProductsController extends Controller
 
         return redirect()->route('products.index');
     }
-
-    public function export_products(): RedirectResponse
-    {
-        (new ProductsExport)->queue('products'. date('Y-m-d-His'). '.xlsx', 'disk_reports');
-        //(new ProductsExport)->queue('products.xlsx', 'disk_reports');
-        Logger::export_products_admin();
-        
-        return redirect()->route('products.index')->with('messag', 'The export was successfully');
-       // return Excel::download(new ProductsExport(), 'products.xlsx');
-    }
-
-    public function import_products(Request $request): RedirectResponse
-    {
-       if( $file= $request->file('doc')){
-        Excel::import(new ProductsImport, $file);
-        Logger::import_products_admin();
-        return redirect()->route('products.index')->with('message', 'The import was successfully');
-       };
-
-       return redirect()->route('products.index')->with('message', 'Attach an excel file');
-       
-    }
+   
     
 }

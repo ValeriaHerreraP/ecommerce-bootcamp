@@ -8,7 +8,7 @@ class OrderCreatedByMonth
     public static function execute(): array
     {
         $chart_options = [
-            'chart_title' => 'ORDENES CREADAS POR MES',
+            'chart_title' => 'ORDER CREATED FOR MONTH',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Payment',
             'group_by_field' => 'created_at',
