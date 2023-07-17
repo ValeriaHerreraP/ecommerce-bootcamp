@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\UserActions\UserListAction;
-use App\Actions\UserActions\UserUpdateAction;
 use App\Http\Requests\UpdateUserRequest;
-use App\Loggers\Logger;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,20 +10,10 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('can:users.index')->only('index');
-        $this->middleware('can:users.edit')->only('edit', 'update');
-        $this->middleware('can:users.destroy')->only('destroy');
-    }
-
     public function index(Request $request): View
     {
         $search = $request->search;
-        if ($search == null) {
-            $search = '';
-        }
-        $users = UserListAction::execute($search);
+        $users = User::where('name', 'LIKE', "%{$search}%")->orWhere('lastname', 'LIKE', "%{$search}%")->latest()->paginate();
 
         return view('users.index', ['users' => $users]);
     }
@@ -38,39 +25,37 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-        Logger::update_users_admin($user);
-        $user = UserUpdateAction::execute($request, $user);
+        $request->validate();
 
-        return redirect()->route('users.index');
-    }
-
-    public function update_state_enable(User $user): RedirectResponse
-    {
         $user->update([
-            'state' => 0,
+            'name'=> $request->name,
+            'lastname'=> $request->lastname,
+            'phone'=> $request->phone,
+            'email'=> $request->email,
         ]);
 
-        Logger::update_users_state($user);
-
-        return redirect()->route('users.index');
+        return redirect()->route('users.index', $user);
     }
 
-    public function update_state_disable(User $user): RedirectResponse
+    public function updateState(Request $request, User $user): RedirectResponse
     {
+        if ($request->state == 'Habilitar') {
+            $state = 1;
+        } else {
+            $state = 0;
+        }
+
         $user->update([
-            'state' => 1,
+            'state' => $state,
         ]);
 
-        Logger::update_users_state($user);
-
-        return redirect()->route('users.index');
+        return back();
     }
 
     public function destroy(User $user): RedirectResponse
     {
-        Logger::delete_users($user);
         $user->delete();
 
-        return redirect()->route('users.index');
+        return back();
     }
 }

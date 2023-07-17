@@ -46,8 +46,8 @@
             </div>
                 <div class="font-semibold text-s text-gray-800 leading-tight flex justify-between" >
                   
-                  <br><a href="/available_products"  class="text-s bg-gray-800 text-white rounded px-4 py-2"  class="btn btn-dark">Regresa a la tienda</a><br>
-                 <br> <a href="/payment_user" class="text-s bg-gray-800 text-white rounded px-4 py-2" class="btn btn-success">Conoce tu historial de pagos</a><br>
+                  <br><a href="/carrito"  class="text-s bg-gray-800 text-white rounded px-4 py-2"  class="btn btn-dark">Regresa a la tienda</a><br>
+                 <br> <a href="/paymentUser" class="text-s bg-gray-800 text-white rounded px-4 py-2" class="btn btn-success">Conoce tu historial de pagos</a><br>
                </div>
         </div>
     </div>

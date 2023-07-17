@@ -2,63 +2,54 @@
 
 namespace App\Services;
 
-use App\Actions\PaymentActions\NumOrderDetails;
-use App\Actions\PaymentActions\OrderDetailsAction;
-use App\Actions\PaymentActions\PaymentCreateAction;
-use App\Loggers\Logger;
+use App\Actions\PaymentCreateAction;
+use App\Models\OrderDetails;
 use App\Models\Payment;
 use Carbon\Carbon;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use function PHPUnit\Framework\throwException;
 
 class PlaceToPayPayment
 {
-    public function createSession(Request $request, string $order_id) : Payment
+    public function createSession(Request $request)
     {
-        if ($order_id == '') {
-            $order = PaymentCreateAction::execute();
-            $orderExist = false;
-        } else {
-            $order = Payment::query()->where('order_id', '=', "$order_id")->first();
-            $orderExist = true;
+        //$price = \Cart::getTotal();
+
+        //$neworden=  Payment::create([
+        //'user_id' => auth()->id(),
+        // 'price_sum' => $price,
+        //]);
+
+        $neworden = PaymentCreateAction::execute($request->all());
+
+        $result = Http::post(
+            config('credentialesEvertec.url').'/api/session',
+            $this->createRequest($neworden, $request->ip(), $request->userAgent())
+        );
+
+        if ($result->ok()) {
+            $neworden->order_id = $result->json()['requestId'];
+            $neworden->url = $result->json()['processUrl'];
+
+            $neworden->update();
+
+            redirect()->to($neworden->url)->send();
         }
 
-        OrderDetailsAction::execute($order);
-
-        try {
-            $result = Http::post(
-                config('credentialesEvertec.url').'/api/session',
-                $this->createRequest($order, $request->ip(), $request->userAgent())
-            );
-
-            if ($result->ok()) {
-                if ($orderExist == false) {
-                    $order->order_id = $result->json()['requestId'];
-                }
-
-                $order->url = $result->json()['processUrl'];
-
-                $order->update();
-
-                Logger::payment_session_created_successfully();
-
-                return $order;
-            }
-
-            throw new \Exception($result->body());
-        } catch(\Exception $error) {
-            Logger::payment_gateway_error($error);
-            throw $error;
+        //redirigir al usuario a un lugar para indicarle porque no funciono
+        else {
+            return view('product.index');
         }
+        //throw new \Exception($result->body());
     }
 
-    public function getRequestInformation(Payment $order): View
+    public function getRequestInformation()
     {
-        $placetopay_id = explode('/', $order->url)[5];
+        $neworder = Payment::query()->where('user_id', '=', auth()->id())
+        ->where('status', '=', 'PENDING')->latest()->first();
+
         $resultRequest = Http::post(
-            config('credentialesEvertec.url')."/api/session/$placetopay_id",
+            config('credentialesEvertec.url')."/api/session/$neworder->order_id",
             [
                'auth' => $this->getAuth(),
             ]
@@ -68,21 +59,31 @@ class PlaceToPayPayment
             $status = $resultRequest->json()['status']['status'];
 
             if ($status == 'APPROVED' || $status == 'APPROVED_PARTIAL') {
-                $order->completed();
+                $neworder->completed();
             } elseif ($status == 'REJECTED' || $status == 'PARTIAL_EXPIRED' || $status == 'FAILED') {
-                $order->canceled();
+                $neworder->canceled();
             } else {
                 throw new \Exception($resultRequest->body());
             }
 
-            Logger::order_payment_status($status, $order->id);
+            $cartCollection = \Cart::getContent();
 
-            $order_details = NumOrderDetails::execute($order->id);
+            foreach ($cartCollection as $items) {
+                $subtotal = ($items->price * $items->quantity);
 
-            return view('payments.detailsOrder', ['payment' => $order_details, 'payment_status' => $order->status]);
+                OrderDetails::create([
+                    'user_id' => auth()->id(),
+                    'order_id'=> $neworder->id,
+                    'name'=> $items->name,
+                    'price'=> $items->price,
+                    'quantity'=>$items->quantity,
+                    'subtotal' =>$subtotal,
+                    'total'=> \Cart::getTotal(),
+                    ]);
+            }
+
+            return view('cart.payments', ['cartCollection' => $cartCollection, 'neworder' =>$neworder]);
         }
-
-        return view('cart.index');
     }
 
     private function getAuth(): array
@@ -99,7 +100,7 @@ class PlaceToPayPayment
                     true,
                 )
             ),
-            'nonce'=> base64_encode(strval($nonce)),
+            'nonce'=> base64_encode($nonce),
             'seed' => $seed,
         ];
     }
@@ -117,28 +118,30 @@ class PlaceToPayPayment
             ],
             'payment' => [
                 'reference' => $neworden->id,
-                'description' => $this->order_details_in_the_payment_gateway($neworden),
+                'description' => $this->recorrer(),
                 'amount' => [
                     'currency' => 'COP',
-                    'total' =>  $neworden->price_sum,
+                    'total' => \Cart::getTotal(),
                 ],
                 ],
 
             'expiration' => Carbon::now()->addHour(),
-            'returnUrl' => route('cart.resultPayments', ['id' => $neworden->id]),
+            'returnUrl' => route('cart.resultPayments'),
             'ipAddress' => $ipAdress,
             'userAgent' => $userAgent,
 
             ];
     }
 
-    public function order_details_in_the_payment_gateway($order):string
+    public function recorrer():string
     {
-        $datos = NumOrderDetails::execute($order->id);
+        $datos = \Cart::getContent();
 
         $info = '';
 
         foreach ($datos as $items) {
+            $items->name;
+            $items->quantity;
             $info = $info.' - '.$items->name.'. Cantidad:  '.$items->quantity.'.  ';
         }
 

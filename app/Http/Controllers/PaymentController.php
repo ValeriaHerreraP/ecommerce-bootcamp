@@ -2,72 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\PaymentActions\NumOrderDetails;
-use App\Actions\PaymentActions\UserPaymentHistoryAction;
-use App\Models\Payment;
+use App\Actions\NumOrderDetails;
+use App\Actions\UserOrderAction;
 use App\Services\PlaceToPayPayment;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('can:payments.detailsPayments')->only('pay');
-        $this->middleware('can:cart.resultPayments')->only('processResponse');
-        $this->middleware('can:payments.index')->only('userPaymentHistory');
-        $this->middleware('can:payments.detailsOrder')->only('userOrderDetails');
-        $this->middleware('can:payments.retryOrder')->only('retryPay');
-    }
-
-    public function pay(Request $request): RedirectResponse
+    public function pagos(Request $request):View
     {
         $payments = new PlaceToPayPayment();
+        $payments->createSession($request);
 
-        try {
-            $order = $payments->createSession($request, '');
-        } catch(\Exception $e) {
-            return redirect()->route('dashboard');
-            //CAMBIAR
-        }
-
-            return redirect()->to($order->url)->send();
+        return $payments->getRequestInformation();
     }
 
-    public function retryPay(Request $request):RedirectResponse
+    public function processResponse(PlaceToPayPayment $placeToPayPayment)
     {
-        $orden_id = $request->order_id;
-        $payments = new PlaceToPayPayment();
-
-        $order = $payments->createSession($request, $orden_id);
-
-        return redirect()->to($order->url)->send();
+        return $placeToPayPayment->getRequestInformation();
     }
 
-    public function processResponse(Request $request): View
+    public function index(): View
     {
-        $id = $request->query('id');
-        $order = Payment::query()->where('user_id', '=', auth()->id())
-        ->where('id', '=', $id)->latest()->first();
-
-        $placeToPayPayment = new PlaceToPayPayment();
-
-        return $placeToPayPayment->getRequestInformation($order);
-    }
-
-    public function userPaymentHistory(): View
-    {
-        $userpayment = UserPaymentHistoryAction::execute();
+        $userpayment = UserOrderAction::execute();
 
         return view('payments.index', ['payment' => $userpayment]);
     }
 
-    public function userOrderDetails(Request $request): View
+    public function detailsCart(Request $request): View
     {
         $numorder = $request->state;
         $order = NumOrderDetails::execute($numorder);
 
-        return view('payments.detailsOrder', ['payment' => $order, 'payment_status' => '']);
+        return view('payments.detailsOrder', ['payment' => $order]);
     }
 }

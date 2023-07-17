@@ -12,63 +12,37 @@
 
                 <!-- Navigation Links -->
 
-                @can('users.index')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @can('users.index')
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('dashboard')">
                         {{ __('Admin User') }}
                     </x-nav-link>
                 </div>
-                @endcan
 
-                @can('products.index')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('products.index')" :active="request()->routeIs('dashboard')">
                         {{ __('Admin Products') }}
                     </x-nav-link>
+                    @endcan
                 </div>
-                @endcan
 
-                @can('cart.shop')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('cart.shop')" :active="request()->routeIs('dashboard')">
                         {{ __('Products') }}
                     </x-nav-link>
                 </div>
-                @endcan
 
-                @can('cart.index')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('cart.index')" :active="request()->routeIs('dashboard')">
                         {{ __('Cart') }}
                     </x-nav-link>
                 </div>
-                @endcan
 
-                @can('payments.index')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('payments.index')" :active="request()->routeIs('dashboard')">
                         {{ __('Shopping history') }}
                     </x-nav-link>
                 </div>
-                @endcan
-
-                @can('reports.general')
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('reports.general')" :active="request()->routeIs('dashboard')">
-                        {{ __('Report General') }}
-                    </x-nav-link>
-                </div>
-                @endcan
-
-                @can('reports.DetailMonth')
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('reports.DetailMonth')" :active="request()->routeIs('dashboard')">
-                        {{ __('Report Month') }}
-                    </x-nav-link>
-                </div>
-                @endcan
-
-
             </div>
 
             <!-- Settings Dropdown -->

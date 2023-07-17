@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Actions\PaymentActions;
+namespace App\Actions;
 
 use App\Models\Payment;
-use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class PaymentCreateAction
 {
-    public static function execute(): Payment
+    public static function execute()
     {
-        $price = Cart::getTotal();
+        $price = \Cart::getTotal();
 
         return Payment::create([
         'user_id' => auth()->id(),
