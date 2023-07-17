@@ -3,7 +3,14 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between">
      
-        {{ __(' Detalle de tu compra:') }}          
+        @if ($payment_status != '')
+            {{ __(' Estado del pago:' ) }}
+            {{$payment_status}}
+        @endif
+        <br>
+        <br>
+
+        {{ __(' Detalle de tu compra:') }}  
                                  
         <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -40,7 +47,7 @@
             </div>
                 <div class="font-semibold text-s text-gray-800 leading-tight flex justify-between" >
                   
-                  <br><a href="/carrito"  class="text-s bg-gray-800 text-white rounded px-4 py-2"  class="btn btn-dark">Regresa a la tienda</a><br>
+                  <br><a href="/available_products"  class="text-s bg-gray-800 text-white rounded px-4 py-2"  class="btn btn-dark">Regresa a la tienda</a><br>
                </div>
         </div>
     </div>

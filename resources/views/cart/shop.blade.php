@@ -1,15 +1,15 @@
 <title>Products</title>
 <style>
     .principal {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        flex-direction: column !important;
     }
     .items-prueba {
         flex-basis: auto !important;
-        min-width: 250px !important; /* Puedes modificar este tamaño si necesitas que la caja tenga un tamaño minimo */
-        max-width: 280px !important; /* Puedes modificar este tamaño si necesIitas que la caja tenga un tamaño maximo */
+        min-width: 280px !important; /* Puedes modificar este tamaño si necesitas que la caja tenga un tamaño minimo */
+        max-width: 300px !important; /* Puedes modificar este tamaño si necesIitas que la caja tenga un tamaño maximo */
         flex-grow: 1 !important; 
     }
     .items-content {
@@ -19,7 +19,7 @@
         flex-wrap: wrap !important; /* Coloca el contenido en la siguiente linea cuando no cabe en el ancho total establecido*/
         justify-content: center !important;
         align-items: center !important;
-        gap: 10px !important; /* Agrega un espaciado entre cajas*/
+        gap: 20px !important; /* Agrega un espaciado entre cajas*/
     }
     .items-img {
         width: 100% !important;
@@ -33,14 +33,13 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between">
             {{ __(' Products') }}  
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <form action="{{ route('productos') }}" method="GET">
+                <form action="{{ route('cart.shop') }}" method="GET">
                     <input type="text" name="search" placeholder="Search products name" value="{{ request('search') }}"
                     class="text-s" class="border border-gray-200 rounded py-2 px-4 w-1/2">
                 </form>
         </div>
         </h2>
-
-    </x-slot>
+        <hr/> 
     
     <div class="py-1">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -97,7 +96,7 @@
             {{$products->links()}}
         
     </div>
-   
+      </x-slot>
 </x-app-layout>
 
 
