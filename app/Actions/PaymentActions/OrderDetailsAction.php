@@ -2,12 +2,14 @@
 
 namespace App\Actions\PaymentActions;
 use App\Models\OrderDetail;
+use App\Models\Payment;
+use Illuminate\Http\Request;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 
 class OrderDetailsAction
 {
-    public static function execute($order): Bool
+    public static function execute(Payment $order): Bool
     {
         $cartCollection = Cart::getContent();
 

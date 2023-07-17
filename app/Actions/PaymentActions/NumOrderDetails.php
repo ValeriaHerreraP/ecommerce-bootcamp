@@ -4,6 +4,7 @@ namespace App\Actions\PaymentActions;
 
 use App\Models\OrderDetail;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
 
 class NumOrderDetails
 {

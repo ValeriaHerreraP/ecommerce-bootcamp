@@ -23,6 +23,9 @@ class UserController extends Controller
     public function index(Request $request): View
     {
         $search = $request->search;
+        if ($search == null) {
+            $search = "";
+        }
         $users = UserListAction::execute($search);
 
         return view('users.index', ['users' => $users]);

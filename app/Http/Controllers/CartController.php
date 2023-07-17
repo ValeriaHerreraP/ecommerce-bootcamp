@@ -28,6 +28,9 @@ class CartController extends Controller
     public function shop(Request $request): View
     {
         $search = $request->search;
+        if ($search == null) {
+            $search = "";
+        }
         $product = SearchCartAction::execute($search);
 
         return view('cart.shop', ['products' => $product]);

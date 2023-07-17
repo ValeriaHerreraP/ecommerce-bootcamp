@@ -7,7 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserListAction
 {
-    public static function execute($search): LengthAwarePaginator
+    public static function execute(string $search): LengthAwarePaginator
     {
         return User::where('name', 'LIKE', "%{$search}%")->orWhere('lastname', 'LIKE', "%{$search}%")->latest()->paginate();
     }

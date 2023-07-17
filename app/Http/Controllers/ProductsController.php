@@ -31,6 +31,9 @@ class ProductsController extends Controller
     public function index(Request $request): View
     {
         $search = $request->search;
+        if ($search == null) {
+            $search = "";
+        }
         $product = ProductListAction::execute($search);
 
         return view('products.index', ['products' => $product]);
