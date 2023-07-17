@@ -19,7 +19,7 @@ class SalesByMonth
             'aggregate_function' => 'sum',
             'aggregate_field' => 'price_sum',
             'filter_period' => 'year',
-            'chart_color' => '106, 90, 205'
+            'chart_color' => '106, 90, 205',
         ];
 
         return $chart_options;

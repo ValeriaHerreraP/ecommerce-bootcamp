@@ -2,7 +2,6 @@
 
 namespace App\Actions\ReportActions;
 
-
 class Top3UserCurrentMonth
 {
     public static function execute(): array
@@ -17,7 +16,7 @@ class Top3UserCurrentMonth
             'group_by_period' => 'day',
             'filter_field' => 'created_at',
             'filter_period' => 'month',
-            'chart_color' => '106, 90, 205'
+            'chart_color' => '106, 90, 205',
          ];
 
         return $chart_options;

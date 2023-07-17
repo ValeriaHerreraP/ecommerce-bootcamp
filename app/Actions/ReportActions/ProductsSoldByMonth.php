@@ -2,7 +2,6 @@
 
 namespace App\Actions\ReportActions;
 
-
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class ProductsSoldByMonth
@@ -20,9 +19,9 @@ class ProductsSoldByMonth
             'filter_period' => 'year',
             'aggregate_function' => 'sum',
             'aggregate_field' => 'quantity',
-            'chart_color' => '106, 90, 205'
+            'chart_color' => '106, 90, 205',
             ];
 
-            return $chart_options;
+        return $chart_options;
     }
-}    
+}

@@ -7,14 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
-* @mixin Product
-*/
+ * @mixin Product
+ */
 class ProductResourse extends JsonResource
 {
-
     public function toArray(Request $request): array
     {
-
         return [
             'name_product' => $this->product,
             'price' => $this->price,

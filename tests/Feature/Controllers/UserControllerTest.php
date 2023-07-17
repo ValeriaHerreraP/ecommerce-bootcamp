@@ -4,9 +4,9 @@ namespace Tests\Feature\Controllers;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
@@ -21,7 +21,7 @@ class UserControllerTest extends TestCase
 
     public function test_list_users_rol_not_authorize()
     {
-        $customer= User::factory()->create();
+        $customer = User::factory()->create();
         $role = Role::findOrCreate('customer');
         $customer->assignRole($role);
         $this->actingAs($customer);
@@ -151,7 +151,7 @@ class UserControllerTest extends TestCase
         $super_admin->assignRole($role);
 
         $this->actingAs($super_admin);
-        
+
         $user = User::factory()->create();
 
         $data = ['state' => 1];

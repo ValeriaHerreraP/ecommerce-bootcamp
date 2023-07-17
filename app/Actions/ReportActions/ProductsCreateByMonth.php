@@ -2,7 +2,6 @@
 
 namespace App\Actions\ReportActions;
 
-
 class ProductsCreateByMonth
 {
     public static function execute(): array
@@ -16,10 +15,9 @@ class ProductsCreateByMonth
             'chart_type' => 'bar',
             'filter_field' => 'created_at',
             'filter_period' => 'year',
-            'chart_color' => '106, 90, 205'
+            'chart_color' => '106, 90, 205',
             ];
 
-            return $chart_options;
-        }
+        return $chart_options;
+    }
 }
-

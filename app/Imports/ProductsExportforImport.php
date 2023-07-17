@@ -3,18 +3,18 @@
 namespace App\Imports;
 
 use App\Models\Product;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class ProductsExportforImport implements ToModel, WithChunkReading, ShouldQueue, WithHeadingRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         return new Product([
@@ -28,6 +28,7 @@ class ProductsExportforImport implements ToModel, WithChunkReading, ShouldQueue,
          'updated_at' => $row['updated_at'],
         ]);
     }
+
     public function chunkSize(): int
     {
         return 10;
