@@ -6,33 +6,32 @@ use App\Actions\ProductActions\ProductCreateAction;
 use App\Actions\ProductActions\ProductDeleteAction;
 use App\Actions\ProductActions\ProductListAction;
 use App\Actions\ProductActions\ProductUpdateAction;
+use App\Exports\ProductsDownloadExport;
+use App\Exports\ProductsExport;
 use App\Http\Requests\UpdateProductsRequest;
+use App\Imports\ProductsImport;
+use App\Loggers\Logger;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use App\Exports\ProductsExport;
-use App\Exports\ProductsDownloadExport;
-use App\Imports\ProductsImport;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Loggers\Logger;
-
 
 class ProductsController extends Controller
 {
     public function __construct()
     {
         $this->middleware('can:products.index')->only('index');
-        $this->middleware('can:products.create')->only('create','store');
-        $this->middleware('can:products.edit')->only('edit','update');
+        $this->middleware('can:products.create')->only('create', 'store');
+        $this->middleware('can:products.edit')->only('edit', 'update');
         $this->middleware('can:products.destroy')->only('destroy');
     }
-    
+
     public function index(Request $request): View
     {
         $search = $request->search;
         if ($search == null) {
-            $search = "";
+            $search = '';
         }
         $product = ProductListAction::execute($search);
 
@@ -86,6 +85,4 @@ class ProductsController extends Controller
 
         return redirect()->route('products.index');
     }
-   
-    
 }

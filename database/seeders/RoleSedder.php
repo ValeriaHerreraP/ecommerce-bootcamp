@@ -18,7 +18,7 @@ class RoleSedder extends Seeder
         $roleUser = Role::create(['name' => 'customer']);
         $roleSuperAdmin = Role::create(['name' => 'super_admin']);
 
-        Permission::create(['name' => 'dashboard'])->syncRoles([$roleAdmin, $roleUser,$roleSuperAdmin]);
+        Permission::create(['name' => 'dashboard'])->syncRoles([$roleAdmin, $roleUser, $roleSuperAdmin]);
 
         Permission::create(['name' => 'users.index'])->syncRoles([$roleAdmin, $roleSuperAdmin]);
         Permission::create(['name' => 'users.edit'])->syncRoles([$roleAdmin, $roleSuperAdmin]);
@@ -50,6 +50,5 @@ class RoleSedder extends Seeder
 
         Permission::create(['name' => 'reports.general'])->assignRole([$roleSuperAdmin]);
         Permission::create(['name' => 'reports.DetailMonth'])->assignRole([$roleSuperAdmin]);
-       
     }
 }

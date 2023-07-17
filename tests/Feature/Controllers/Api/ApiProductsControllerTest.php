@@ -5,10 +5,10 @@ namespace Tests\Feature\Controllers\Api;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Testing\Fluent\AssertableJson;
+use Tests\TestCase;
 
 class ApiProductsControllerTest extends TestCase
 {
@@ -20,11 +20,11 @@ class ApiProductsControllerTest extends TestCase
         $this->getJson(route('api.products.index'))
             ->assertOk();
     }*/
-    
+
     public function test_store_product_api()
     {
-         /** @var Product $product */
-         $product = Product::factory()->make();
+        /** @var Product $product */
+        $product = Product::factory()->make();
 
         Storage::fake('public');
         $file = UploadedFile::fake()->image('images/logo.png');
@@ -46,7 +46,6 @@ class ApiProductsControllerTest extends TestCase
                         ->has('image')
                         ->where('state', $product->state);
                     });
-                
             });
 
         $this->assertDatabaseHas('products', [
@@ -56,7 +55,7 @@ class ApiProductsControllerTest extends TestCase
             'state' => $product->state,
         ]);
     }
-    
+
     public function test_show_api(): void
     {
         /** @var Product $product */
@@ -72,25 +71,25 @@ class ApiProductsControllerTest extends TestCase
                         ->where('description', $product->description)
                         ->where('image', $product->image)
                         ->has('state');
-                    });
+                });
             });
-            }
+    }
 
     public function test_update_product_api()
     {
-          /** @var Product $post */
-          $product = Product::factory()->create();
+        /** @var Product $post */
+        $product = Product::factory()->create();
 
-          $this->putJson(route('api.products.update', $product->id), [
-              'price' => '45789',
-          ])->assertOk()
-              ->assertJson(function (AssertableJson $json) {
-                  $json->where('message', 'The product was updated successfully');
-              });
-  
-          $this->assertDatabaseHas('products', [
+        $this->putJson(route('api.products.update', $product->id), [
             'price' => '45789',
-          ]);
+        ])->assertOk()
+            ->assertJson(function (AssertableJson $json) {
+                $json->where('message', 'The product was updated successfully');
+            });
+
+        $this->assertDatabaseHas('products', [
+          'price' => '45789',
+        ]);
     }
 
     public function test_can_destroy(): void
@@ -100,13 +99,12 @@ class ApiProductsControllerTest extends TestCase
         $this->deleteJson(route('api.products.destroy', $product))
             ->assertNoContent($status = 204);
 
-    $this->assertDatabaseMissing('products', [
-        'product' => $product->product,
-        'price' => $product->price,
-        'description' => $product->description,
-        'image'=> $product->image,
-        'state' => $product->state,
-    ]);
-}
-    
+        $this->assertDatabaseMissing('products', [
+            'product' => $product->product,
+            'price' => $product->price,
+            'description' => $product->description,
+            'image'=> $product->image,
+            'state' => $product->state,
+        ]);
+    }
 }

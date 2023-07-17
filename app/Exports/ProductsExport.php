@@ -13,18 +13,18 @@ class ProductsExport implements FromQuery, WithHeadings
 {
     use Exportable;
     /**
-    * @return \Illuminate\Database\Eloquent\Builder;
-    */
-   /* public function collection()
-    {
-        return Product::all();
-    }*/
+     * @return \Illuminate\Database\Eloquent\Builder;
+     */
+    /* public function collection()
+     {
+         return Product::all();
+     }*/
 
     public function query(): Builder
     {
         return Product::query();
     }
-     
+
     public function headings(): array
     {
         return [

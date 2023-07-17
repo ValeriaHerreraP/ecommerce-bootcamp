@@ -2,16 +2,15 @@
 
 namespace App\Services;
 
+use App\Actions\PaymentActions\NumOrderDetails;
+use App\Actions\PaymentActions\OrderDetailsAction;
 use App\Actions\PaymentActions\PaymentCreateAction;
+use App\Loggers\Logger;
 use App\Models\Payment;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use App\Actions\PaymentActions\NumOrderDetails;
-use App\Loggers\Logger;
-use App\Actions\PaymentActions\OrderDetailsAction;
-use Illuminate\Contracts\View\View;
-
 use function PHPUnit\Framework\throwException;
 
 class PlaceToPayPayment
@@ -27,30 +26,29 @@ class PlaceToPayPayment
         }
 
         OrderDetailsAction::execute($order);
-        
-        try{
+
+        try {
             $result = Http::post(
                 config('credentialesEvertec.url').'/api/session',
                 $this->createRequest($order, $request->ip(), $request->userAgent())
             );
-    
+
             if ($result->ok()) {
-                if($orderExist == false){
+                if ($orderExist == false) {
                     $order->order_id = $result->json()['requestId'];
                 }
-                
+
                 $order->url = $result->json()['processUrl'];
-    
+
                 $order->update();
 
                 Logger::payment_session_created_successfully();
-    
+
                 return $order;
             }
 
-             throw new \Exception($result->body());
-
-        }catch(\Exception $error){
+            throw new \Exception($result->body());
+        } catch(\Exception $error) {
             Logger::payment_gateway_error($error);
             throw $error;
         }
@@ -83,6 +81,7 @@ class PlaceToPayPayment
 
             return view('payments.detailsOrder', ['payment' => $order_details, 'payment_status' => $order->status]);
         }
+
         return view('cart.index');
     }
 

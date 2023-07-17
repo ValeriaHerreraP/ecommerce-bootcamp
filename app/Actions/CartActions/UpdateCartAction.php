@@ -2,9 +2,8 @@
 
 namespace App\Actions\CartActions;
 
-use Illuminate\Http\Request;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
-
+use Illuminate\Http\Request;
 
 class UpdateCartAction
 {

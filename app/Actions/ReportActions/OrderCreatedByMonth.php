@@ -2,7 +2,6 @@
 
 namespace App\Actions\ReportActions;
 
-
 class OrderCreatedByMonth
 {
     public static function execute(): array
@@ -17,9 +16,9 @@ class OrderCreatedByMonth
             'filter_field' => 'created_at',
             'filter_period' => 'year',
             'date_format_filter_days',
-            'chart_color' => '106, 90, 205'
+            'chart_color' => '106, 90, 205',
             ];
 
-            return $chart_options;
+        return $chart_options;
     }
 }

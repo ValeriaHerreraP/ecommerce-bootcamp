@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use App\Actions\UserActions\UserListAction;
 use App\Actions\UserActions\UserUpdateAction;
 use App\Http\Requests\UpdateUserRequest;
+use App\Loggers\Logger;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use App\Loggers\Logger;
 
 class UserController extends Controller
 {
     public function __construct()
     {
         $this->middleware('can:users.index')->only('index');
-        $this->middleware('can:users.edit')->only('edit','update');
+        $this->middleware('can:users.edit')->only('edit', 'update');
         $this->middleware('can:users.destroy')->only('destroy');
     }
 
@@ -24,7 +24,7 @@ class UserController extends Controller
     {
         $search = $request->search;
         if ($search == null) {
-            $search = "";
+            $search = '';
         }
         $users = UserListAction::execute($search);
 
@@ -40,7 +40,6 @@ class UserController extends Controller
     {
         Logger::update_users_admin($user);
         $user = UserUpdateAction::execute($request, $user);
-  
 
         return redirect()->route('users.index');
     }
@@ -63,6 +62,7 @@ class UserController extends Controller
         ]);
 
         Logger::update_users_state($user);
+
         return redirect()->route('users.index');
     }
 
@@ -70,7 +70,7 @@ class UserController extends Controller
     {
         Logger::delete_users($user);
         $user->delete();
-      
+
         return redirect()->route('users.index');
     }
 }

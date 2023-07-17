@@ -7,9 +7,8 @@ use App\Actions\PaymentActions\UserPaymentHistoryAction;
 use App\Models\Payment;
 use App\Services\PlaceToPayPayment;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -27,8 +26,8 @@ class PaymentController extends Controller
         $payments = new PlaceToPayPayment();
 
         try {
-            $order = $payments->createSession($request, "");
-        }catch(\Exception $e){
+            $order = $payments->createSession($request, '');
+        } catch(\Exception $e) {
             return redirect()->route('dashboard');
             //CAMBIAR
         }
@@ -42,6 +41,7 @@ class PaymentController extends Controller
         $payments = new PlaceToPayPayment();
 
         $order = $payments->createSession($request, $orden_id);
+
         return redirect()->to($order->url)->send();
     }
 
@@ -52,6 +52,7 @@ class PaymentController extends Controller
         ->where('id', '=', $id)->latest()->first();
 
         $placeToPayPayment = new PlaceToPayPayment();
+
         return $placeToPayPayment->getRequestInformation($order);
     }
 
@@ -67,6 +68,6 @@ class PaymentController extends Controller
         $numorder = $request->state;
         $order = NumOrderDetails::execute($numorder);
 
-        return view('payments.detailsOrder', ['payment' => $order, 'payment_status' => ""]);
+        return view('payments.detailsOrder', ['payment' => $order, 'payment_status' => '']);
     }
 }
