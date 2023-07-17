@@ -7,7 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductListAction
 {
-    public static function execute($search): LengthAwarePaginator
+    public static function execute(string $search): LengthAwarePaginator
     {
         return Product::where('product', 'LIKE', "%{$search}%")->paginate(10);
     }
