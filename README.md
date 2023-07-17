@@ -12,7 +12,6 @@ Para el administrador de MercaTodo es sumamente importante que el sistema le per
 
 Dentro del desarrollo del proyecto se encuentran las siguientes características: 
 
-
 - GIT como sistema de gestión de versiones.
 - Formato de código PSR-2 y PSR12.
 - Uso de COMPOSER como herramienta de gestión de dependencias.
@@ -109,5 +108,4 @@ Si deseas ejecutar los trabajos encolados de la exportación y la importación d
 Para ejecutar los test ejecuta el comando:
 
     .vendor/bin/phpunit
-
 
