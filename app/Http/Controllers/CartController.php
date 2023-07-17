@@ -29,7 +29,7 @@ class CartController extends Controller
     {
         $search = $request->search;
         if ($search == null) {
-            $search = "";
+            $search = '';
         }
         $product = SearchCartAction::execute($search);
 

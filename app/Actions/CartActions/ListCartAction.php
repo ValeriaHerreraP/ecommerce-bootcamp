@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Actions\CartActions;
-use Darryldecode\Cart\Facades\CartFacade as Cart;
+
 use Darryldecode\Cart\CartCollection;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class ListCartAction
 {

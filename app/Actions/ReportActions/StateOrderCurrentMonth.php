@@ -2,7 +2,6 @@
 
 namespace App\Actions\ReportActions;
 
-
 class StateOrderCurrentMonth
 {
     public static function execute(): array
@@ -17,9 +16,10 @@ class StateOrderCurrentMonth
             'group_by_period' => 'day',
             'filter_field' => 'created_at',
             'filter_period' => 'month',
-            'chart_color' => '106, 90, 205'
-        
+            'chart_color' => '106, 90, 205',
+
         ];
+
         return $chart_options;
     }
 }

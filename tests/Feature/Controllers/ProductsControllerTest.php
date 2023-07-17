@@ -7,10 +7,9 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-
+use Tests\TestCase;
 
 class ProductsControllerTest extends TestCase
 {
@@ -25,7 +24,7 @@ class ProductsControllerTest extends TestCase
 
     public function test_list_products_rol_not_authotized()
     {
-        $customer= User::factory()->create();
+        $customer = User::factory()->create();
         $role = Role::findOrCreate('customer');
         $customer->assignRole($role);
 
@@ -38,9 +37,8 @@ class ProductsControllerTest extends TestCase
         $products = $products->first();
         $response
             ->assertForbidden();
-           
     }
-    
+
     public function test_list_products()
     {
         $super_admin = User::factory()->create();
@@ -109,7 +107,6 @@ class ProductsControllerTest extends TestCase
 
         $response
             ->assertRedirectToRoute('products.index');
-            
 
         //$this->assertDatabaseHas('products', $data);
     }
@@ -224,7 +221,4 @@ class ProductsControllerTest extends TestCase
             'state' => $product->state,
         ]);
     }
-
-
 }
-

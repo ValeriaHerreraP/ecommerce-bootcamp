@@ -3,15 +3,14 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 Route::middleware('auth', 'verified', 'user.enabled')->group(function () {
     Route::get('/dashboard', function () {
@@ -50,7 +49,6 @@ Route::middleware('auth')->group(function () {
     Route::put('products/{product}/show', [ProductsController::class, 'update_state_product_enable'])->middleware(('can:products.updateStateEnable'))->name('products.updateStateEnable');
     Route::put('products/{product}/disguise', [ProductsController::class, 'update_state_product_disable'])->middleware(('can:products.updateStateDisable'))->name('products.updateStateDisable');
 
-
     Route::get('/export_import', [ReportController::class, 'export_import'])->name('reports.ExportImport');
     Route::get('products/exportdw', [ReportController::class, 'export_download'])->middleware(('can:products.export'))->name('products.exportdw');
     Route::get('products/export', [ReportController::class, 'export_products_queue'])->middleware(('can:products.export'))->name('products.export');
@@ -58,8 +56,6 @@ Route::middleware('auth')->group(function () {
     Route::post('products/import_delete', [ReportController::class, 'import_products_queue_and_delete'])->middleware(('can:products.import'))->name('products.delete_import');
     Route::get('/report_general', [ReportController::class, 'index'])->middleware(('can:reports.general'))->name('reports.general');
     Route::get('/report_current_month', [ReportController::class, 'detailed_report_for_the_current_month'])->middleware(('can:reports.DetailMonth'))->name('reports.DetailMonth');
-
-    
 });
 
 require __DIR__.'/auth.php';

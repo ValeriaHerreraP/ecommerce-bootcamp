@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Actions\ProductActions;
+
 use App\Models\Product;
 
 class ProductDeleteAction

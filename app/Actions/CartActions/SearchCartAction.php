@@ -3,8 +3,8 @@
 namespace App\Actions\CartActions;
 
 use App\Models\Product;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchCartAction
 {

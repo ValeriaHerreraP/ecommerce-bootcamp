@@ -18,11 +18,11 @@ class TopProductsCurrentMonth
             'aggregate_function' => 'sum',
             'aggregate_field' => 'quantity',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', 
-            'chart_color' => '106, 90, 205'
-          
+            'filter_period' => 'month',
+            'chart_color' => '106, 90, 205',
+
         ];
 
-        return $chart_options; 
+        return $chart_options;
     }
 }

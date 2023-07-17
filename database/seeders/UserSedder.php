@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,7 +20,6 @@ class UserSedder extends Seeder
         }
 
         Product::factory(400)->create();
-        
 
         User::create([
             'name' => 'Valeria',
@@ -31,13 +30,13 @@ class UserSedder extends Seeder
             'state' => true,
          ])->assignRole('admin');
 
-         User::create([
-            'name' => 'Administrador',
-            'lastname' => 'Principal',
-            'phone' => '3205456789',
-            'email' => 'superadmin@evertec.com',
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            'state' => true,
-         ])->assignRole('super_admin');
+        User::create([
+           'name' => 'Administrador',
+           'lastname' => 'Principal',
+           'phone' => '3205456789',
+           'email' => 'superadmin@evertec.com',
+           'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+           'state' => true,
+        ])->assignRole('super_admin');
     }
 }
