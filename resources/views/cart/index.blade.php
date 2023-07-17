@@ -40,7 +40,7 @@
                         @foreach($cartCollection as $item)
                            <tr class = "border-b border-gray-200 text-sm">
                             <td class="px-6 py-4">{{ $item->name }}</td>
-                            <td class="px-6 py-4">{{ $item->price }}</td>   
+                            <td class="px-6 py-4">${{ $item->price }}</td>   
                             <td class="px-6 py-4">${{ \Cart::get($item->id)->getPriceSum() }}</td>  
                             {{--                                <b>With Discount: </b>${{ \Cart::get($item->id)->getPriceSumWithConditions() }}--}}     
                             <td class="px-6 py-4">
@@ -72,7 +72,7 @@
                     {{ \Cart::getTotalQuantity()}} Producto(s) en el carrito<br>
                     @else
                     <h4>No Product(s) In Your Cart</h4><br>
-                    <a href="/carrito" class="text-xs bg-gray-800 text-white rounded px-4 py-2" class="btn btn-dark">Continue en la tienda</a>
+                    <a href="/available_products" class="text-xs bg-gray-800 text-white rounded px-4 py-2" class="btn btn-dark">Continue en la tienda</a>
                 @endif
                    </div>
                 </div>
@@ -80,8 +80,8 @@
                 @if(count($cartCollection)>0)
                 <div class="font-semibold text-s text-gray-800 leading-tight flex justify-between" >
                   
-                    <br><a href="/carrito"  class="text-s bg-gray-800 text-white rounded px-4 py-2"  class="btn btn-dark">Continue en la tienda</a><br>
-                   <br> <a href="/pago" class="text-s bg-gray-800 text-white rounded px-4 py-2" class="btn btn-success">Proceder al Checkout</a><br>
+                    <br><a href="/available_products"  class="text-s bg-gray-800 text-white rounded px-4 py-2"  class="btn btn-dark">Continue en la tienda</a><br>
+                   <br> <a href="/pay" class="text-s bg-gray-800 text-white rounded px-4 py-2" class="btn btn-success">Proceder al Checkout</a><br>
                 </div>
                 <br>
             @endif
