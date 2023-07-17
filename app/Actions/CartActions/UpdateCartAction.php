@@ -2,13 +2,14 @@
 
 namespace App\Actions\CartActions;
 
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
 
 class UpdateCartAction
 {
-    public static function execute(Request $request)
+    public static function execute(Request $request): Bool
     {
-        return \Cart::update(
+        return Cart::update(
             $request->id,
             [
                 'quantity' => [

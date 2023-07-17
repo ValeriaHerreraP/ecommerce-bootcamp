@@ -40,7 +40,7 @@
                         @foreach($cartCollection as $item)
                            <tr class = "border-b border-gray-200 text-sm">
                             <td class="px-6 py-4">{{ $item->name }}</td>
-                            <td class="px-6 py-4">{{ $item->price }}</td>   
+                            <td class="px-6 py-4">${{ $item->price }}</td>   
                             <td class="px-6 py-4">${{ \Cart::get($item->id)->getPriceSum() }}</td>  
                             {{--                                <b>With Discount: </b>${{ \Cart::get($item->id)->getPriceSumWithConditions() }}--}}     
                             <td class="px-6 py-4">

@@ -3,12 +3,13 @@
 namespace App\Actions\PaymentActions;
 
 use App\Models\Payment;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class PaymentCreateAction
 {
-    public static function execute()
+    public static function execute(): Payment
     {
-        $price = \Cart::getTotal();
+        $price = Cart::getTotal();
 
         return Payment::create([
         'user_id' => auth()->id(),

@@ -1,66 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Proyecto Bootcamp Evertec (Ecommerce):
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto hace parte de la evidencia del aprendizaje práctico obtenido en un proceso de formacion (Bootcamp), brindado por la compañía Evertec, una empresa líder de tecnología y procesamiento de transacciones. 
 
-## About Laravel
+## Características generales del proyecto desarrollado:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Un administrador del ecommerce necesita un sistema que le permita realizar la venta de susnproductos de manera online. El sistema deberá permitir registrar cada producto así como también administrar las cuentas de sus clientes, quienes también deberán identificarse para realizar compras de los artículos de mercadería.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Para el administrador de MercaTodo es sumamente importante que el sistema le permita realizar pagos online y generar reportes que sirvan de apoyo para tomar decisiones. También es indispensable que el sistema cuente con opciones para administrar productos de manera masiva.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Requerimientos Técnicos:
 
-## Learning Laravel
+Dentro del desarrollo del proyecto se encuentran las siguientes características: 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- GIT como sistema de gestión de versiones.
+- Formato de código PSR-2 y PSR12.
+- Uso de COMPOSER como herramienta de gestión de dependencias.
+- Separación por capas.
+- Laravel como framework de desarrollo.
+- Flujo de trabajo basado en GIT-FLOW.
+- Tipado estricto en la declaración de funciones y métodos.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Ejecución del proyecto:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Herramientas necesarias  antes de la instalación:
+- Visual studio code
+- Laravel 10
+- Php 
+- Composer
+- Node Js
+- Maria Db
+- Git
 
-## Laravel Sponsors
+Puedes validar que tengas las tecnologías necesarias para ejecutar el proyecto por medio de los siguientes comandos:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- Validar php:         ```php –version```
+- Validar composer: ```composer –version```
+- Validar laravel:  ```laravel –version```
+- Validar npm: ```npm –versión```
 
-### Premium Partners
+Si no tienes alguna. Debes instalarla.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Descarga del proyecto e instalación de dependencias
 
-## Contributing
+Una vez te encuentres en tu editor de código de preferencia ejecuta el comando:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    git clone https://github.com/ValeriaHerreraP/ecommerce-bootcamp.git
 
-## Code of Conduct
+Una vez descargado el proyecto, nos ubicamos dentro de la carpeta del mismo e instalamos las dependencias con los siguientes comandos:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Dependencias de composer:
 
-## Security Vulnerabilities
+        composer install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Depedencias de NPM:
 
-## License
+        npm install
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Para cargar las vistas con todas sus funcionalidades en el navegador es necesario ejecutar el siguiente comando:
+
+    npm run dev
+
+### Configuración archivo .env
+
+En la carpeta raíz del proyecto encontraras un archivo llamado ```.env.example``` el cual sirve de ejemplo para crear tu propio archivo ```.env```
+
+Dentro de este archivo ```.env``` se configuran las variables de entorno, entre ellas: configuración de base de datos, configuración de servidor SMTP, credenciales de ingreso a pasarela de pagos, entre otras.
+
+Las configuraciones obligatorias para este proyecto son:
+
+- Configuración de base de datos: puedes usar la misma que se encuentra en el archivo de ejemplo. Teniendo en cuenta que debes crear en tu motor de base de datos una nueva BD con el mismo nombre <ecommerse_bootcamp>.  Y finalmente configurar el usuario y la contraseña con la que accedes a tu motor. 
+
+- Configuración de servidor SMPT: dentro de la funcionalidad del sistema se encuentra correo de verificación por medio de Mailtrap con el fin de permitir el ingreso a las funcionalidades. Por lo que debes configurar el servidor de mailtrap.
+
+### Migración de datos
+
+Para crear las tablas y rellenarlas con datos de prueba (seeders) debes ejecutar el comando:
+
+    php artisan migrate –seed
+
+### Habilitar almacenamiento de archivos
+
+Para habilitar el almacenamiento de archivos (imágenes de productos) debes ejecutar el comando:
+
+    php artisan storage:link
+
+### Generación de key
+
+Antes de inicializar el servidor, se debe crear la Key del proyecto en artisan:
+
+    php artisan key:generate
+
+### Inicializar el servidor
+
+Una vez creada la Key puedes inicializar el servidor y probar las funcionalidades del programa ejecutando el siguiente comando:
+
+    php artisan serve
+
+
+### Trabajos encolados
+
+Si deseas ejecutar los trabajos encolados de la exportación y la importación de los productos, debes ejecutar el comando: 
+
+    php artisan queue:work
+
+### Test
+
+Para ejecutar los test ejecuta el comando:
+
+    .vendor/bin/phpunit
+

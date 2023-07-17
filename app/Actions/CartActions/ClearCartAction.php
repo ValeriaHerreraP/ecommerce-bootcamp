@@ -2,12 +2,12 @@
 
 namespace App\Actions\CartActions;
 
-use Illuminate\Http\Request;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class ClearCartAction
 {
-    public static function execute()
+    public static function execute(): Bool
     {
-        return \Cart::clear();
+        return Cart::clear();
     }
 }

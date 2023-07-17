@@ -3,7 +3,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between">
      
-        {{ __(' Historial de Pagos:') }}          
+        {{ __(' Detalles de tus Pagos:') }}          
                                  
         <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -36,12 +36,11 @@
                                     <input 
                                         type="submit"
                                         name="order_id"
-                                        value="Reversar pago" 
+                                        value="Retry pay" 
                                         class="bg-gray-500 text-white rounded px-4 py-2"
                                     >
-                                    <input type="hidden" name="order_id" class="rounded border-gray-200 w-full mb-4" value="{{ $item->url }}">  
+                                    <input type="hidden" name="order_id" class="rounded border-gray-200 w-full mb-4" value="{{ $item->order_id }}">  
                              </form>
-                                    <a href="/pay"  class="text-indigo-600"  class="btn btn-dark">Retry</a>
                                     @endif
                             </td>   
                             <td class="px-6 py-4">{{ $item->created_at }}</td> 
@@ -70,6 +69,7 @@
                   <br><a href="/available_products"  class="text-s bg-gray-800 text-white rounded px-4 py-2"  class="btn btn-dark">Regresa a la tienda</a><br>
                </div>
         </div>
+        {{ $payment->links() }}
     </div>
     </x-slot>
 </x-app-layout>
