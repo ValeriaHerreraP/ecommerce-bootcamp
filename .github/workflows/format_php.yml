@@ -3,10 +3,10 @@ name: Apply PHP Code Style
 on:
     push:
         branches:
-            - 'feat/modification-of-views'
+            - 'main'
     pull_request:
         paths:
-            - '**.php'
+            - 'main'
 
 jobs:
     php-cs-fixer:
